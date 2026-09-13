@@ -6,96 +6,151 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ff6b35">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/que-comer-icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/que-comer-icon-192.png">
 <title>Qué Comer Negocio</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f4f6f8;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+#businessFrame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#f4f6f8}
+#loading{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#f4f6f8;color:#344054;font-weight:800}
+#loading>div{background:#fff;border:1px solid #e4e7ec;border-radius:16px;padding:18px 22px;box-shadow:0 12px 34px rgba(16,24,40,.08)}
+#termsOverlay{position:fixed;inset:0;z-index:500;background:rgba(16,24,40,.62);display:none;padding:18px;overflow:auto}
+#termsOverlay.show{display:block}
+#termsCard{width:min(680px,100%);margin:max(18px,env(safe-area-inset-top)) auto 28px;background:#fff;border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.28);overflow:hidden}
+.terms-head{padding:17px 18px;border-bottom:1px solid #e4e7ec}.terms-head h2{margin:0;font-size:20px}
+.terms-body{padding:18px}.terms-notice{padding:12px 14px;border:1px solid #fedf89;background:#fff8eb;color:#93370d;border-radius:12px;font-size:13px;margin-bottom:12px}
+.terms-scroll{max-height:48vh;overflow:auto;border:1px solid #e4e7ec;border-radius:14px;background:#fafafa;padding:14px 16px;line-height:1.48}
+.terms-scroll h3{font-size:14px;margin:13px 0 5px}.terms-scroll h3:first-child{margin-top:0}.terms-scroll p,.terms-scroll li{font-size:12px;color:#475467}.terms-scroll p{margin:5px 0 9px}.terms-scroll ul{padding-left:20px;margin:5px 0 10px}.terms-scroll li{margin:6px 0}
+.accept{display:flex;gap:10px;align-items:flex-start;padding:12px 13px;border:1px solid #fedf89;background:#fffaeb;border-radius:12px;margin-top:12px}.accept input{width:21px;height:21px;flex:0 0 21px}.accept label{font-size:12px;line-height:1.4;font-weight:800;color:#7a2e0e}
+.version{font-size:10px;color:#667085;margin-top:8px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.btn{border:1px solid #d0d5dd;background:#fff;border-radius:11px;padding:11px 13px;font-weight:800;flex:1 1 180px}.btn.primary{background:#ff6b35;border-color:#ff6b35;color:#fff}.btn:disabled{opacity:.5}
+#termsError{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;background:#fef3f2;color:#b42318;font-size:12px;font-weight:700}
+</style>
 </head>
 <body>
+<div id="loading"><div>Abriendo Qué Comer Negocio…</div></div>
+<iframe id="businessFrame" title="Qué Comer Negocio" src="./_core/que-comer-principal-negocio-core.html?v=1.18.15"></iframe>
+
+<div id="termsOverlay" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div id="termsCard">
+    <div class="terms-head"><h2 id="termsTitle">Términos y condiciones para negocios</h2></div>
+    <div class="terms-body">
+      <div class="terms-notice"><b>Antes de enviar tu solicitud debes aceptar estas condiciones.</b> Aplican al establecimiento <span id="termsBusinessName"></span>.</div>
+      <div class="terms-scroll">
+        <h3>Responsabilidad sobre alimentos y productos</h3>
+        <p>El negocio es el único responsable de preparar, conservar, empacar y entregar los alimentos o productos que ofrece mediante Qué Comer Hoy.</p>
+        <ul>
+          <li>Preparará y entregará alimentos frescos, en condiciones higiénicas y aptas para consumo, utilizando insumos y productos de calidad.</li>
+          <li>Cumplirá permisos, disposiciones sanitarias, obligaciones fiscales y demás requisitos legales aplicables.</li>
+          <li>Responderá ante el cliente por calidad, inocuidad, contaminación, preparación, empaque, conservación, faltantes, sustituciones, ingredientes y alérgenos.</li>
+        </ul>
+        <h3>Cumplimiento de pedidos</h3>
+        <ul>
+          <li>Preparará los pedidos conforme a lo solicitado y respetará precios y promociones vigentes.</li>
+          <li>Se compromete a cumplir los pedidos aceptados y no marcar como surtido, listo o entregado un pedido que no haya atendido realmente.</li>
+          <li>Entregará el producto en el lugar, fecha y horario acordados con el cliente.</li>
+        </ul>
+        <h3>Entrega, efectivo y cambio</h3>
+        <ul>
+          <li>Cuando el cliente pague en efectivo, el negocio deberá llevar cambio suficiente para completar correctamente el cobro.</li>
+          <li>El negocio es responsable del traslado, entrega física, manejo del efectivo y seguridad de su personal durante la entrega.</li>
+        </ul>
+        <h3>Comisión por uso de la plataforma</h3>
+        <p>El negocio acepta que el uso de Qué Comer Hoy genera una comisión sobre los pedidos procesados mediante la plataforma. El porcentaje será el asignado por Control Central y podrá modificarse conforme a las condiciones comerciales vigentes.</p>
+        <h3>Función de Qué Comer Hoy</h3>
+        <p>Qué Comer Hoy y su desarrollador proporcionan una herramienta tecnológica de intermediación. No preparan, fabrican, almacenan, manipulan ni transportan los alimentos o productos vendidos por los negocios.</p>
+        <p>El negocio conserva la responsabilidad sobre su operación, personal, productos, cobros, entregas, cumplimiento normativo y atención de reclamos.</p>
+        <h3>Uso correcto y suspensión</h3>
+        <p>Qué Comer Hoy podrá pausar, bloquear o cancelar el acceso de un negocio ante incumplimientos, quejas graves, uso indebido, falta de pago de comisiones o riesgos para clientes o para la plataforma.</p>
+        <h3>Declaración del representante</h3>
+        <p>Quien solicita la activación declara ser propietario, representante, encargado o persona autorizada para aceptar estas condiciones en nombre del establecimiento.</p>
+        <h3>Disponibilidad del servicio</h3>
+        <p>La plataforma depende de Internet y servicios de terceros. No se garantiza un volumen mínimo de pedidos, ventas ni disponibilidad ininterrumpida.</p>
+      </div>
+      <div class="accept">
+        <input id="acceptTerms" type="checkbox">
+        <label for="acceptTerms">He leído y acepto los Términos y Condiciones para Negocios de Qué Comer Hoy. Confirmo que tengo autorización para representar al establecimiento y acepto la responsabilidad sobre productos, pedidos, cobros, entregas y la comisión de la plataforma.</label>
+      </div>
+      <div class="version">Versión: QC-Negocios-2026-09-13-v3</div>
+      <div id="termsError"></div>
+      <div class="actions">
+        <button class="btn" id="declineTerms" type="button">No acepto / Regresar</button>
+        <button class="btn primary" id="confirmTerms" type="button" disabled>Aceptar y enviar solicitud</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-function qcB64uEncode(data){
-  try{return btoa(JSON.stringify(data)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}catch(e){return''}
-}
-function qcB64uDecode(value){
-  try{
-    let s=String(value||'').replace(/-/g,'+').replace(/_/g,'/');
-    while(s.length%4)s+='=';
-    return JSON.parse(atob(s));
-  }catch(e){return null}
-}
-function qcPersistBootstrap(){
-  try{
-    const p=new URLSearchParams(location.search);
-    let data=qcB64uDecode(p.get('qci'));
-    if(!data){
-      const db=(p.get('qcdb')||p.get('db')||'').trim().replace(/\/+$/,'');
-      if(db||p.get('biz')||p.get('newbiz'))data={
-        qcdb:db,
-        qcf:p.get('qcf'),
-        qcl:p.get('qcl'),
-        biz:p.get('biz')||'',
-        newbiz:p.get('newbiz')||'0'
-      };
-    }
-    if(!data)return;
-    const db=String(data.qcdb||'').trim().replace(/\/+$/,'');
-    if(db){
-      localStorage.setItem('qc_platform_db',db);
-      localStorage.setItem('qc_db_url',db);
-      localStorage.setItem('qc_business_runtime_db',db);
-      localStorage.setItem('qc_admin_db_url',db);
-    }
-    if(data.qcf!==undefined&&data.qcf!==null&&Number.isFinite(Number(data.qcf)))localStorage.setItem('qc_platform_fee_v08',String(Number(data.qcf)));
-    if(data.qcl!==undefined&&data.qcl!==null&&Number.isFinite(Number(data.qcl)))localStorage.setItem('qc_loyalty_pct',String(Number(data.qcl)));
-    if(data.biz)localStorage.setItem('qc_last_business_id',String(data.biz));
-    window.name='QC_BOOT_V1:'+encodeURIComponent(JSON.stringify(data));
-    const persistent={...data,newbiz:'0'};
-    const token=qcB64uEncode(persistent);
-    if(token){
-      p.set('qci',token);
-      ['qcdb','db','qcf','qcl','biz','newbiz'].forEach(k=>p.delete(k));
-      const qs=p.toString();
-      history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')+location.hash);
-    }
-  }catch(e){}
-}
-qcPersistBootstrap();
+(()=>{
+  const VERSION='1.18.15',TERMS_VERSION='QC-Negocios-2026-09-13-v3';
+  const frame=document.getElementById('businessFrame'),loading=document.getElementById('loading'),overlay=document.getElementById('termsOverlay');
+  const accept=document.getElementById('acceptTerms'),confirmBtn=document.getElementById('confirmTerms'),errorBox=document.getElementById('termsError');
+  let pending=null,boot={};
 
-const qcAutoUpdate=()=>{
-  if(!('serviceWorker' in navigator))return;
-  let reloading=false;
-  navigator.serviceWorker.addEventListener('controllerchange',()=>{
-    if(reloading)return;
-    reloading=true;
-    location.reload();
-  });
-  const check=async()=>{
-    try{
-      const reg=await navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'});
-      await reg.update().catch(()=>{});
-      if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
-    }catch(e){}
-  };
-  check();
-  window.addEventListener('focus',check);
-  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check()});
-  setInterval(check,60000);
-};
-qcAutoUpdate();
-
-(async()=>{
-  try{
-    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-principal-negocio-core.html?v=1.18.13",{cache:'no-store'});
-    if(!r.ok)throw new Error('No se pudo cargar el visor');
-    let html=await r.text();
-    html=html.replace(/<link\s+rel=[\"']manifest[\"'][^>]*>\s*/ig,'');
-    const changes=[["<div class=\"modalhead\"><h3>Activación del visor de negocio</h3></div>", "<div class=\"modalhead\"><h3>Registrar negocio</h3></div>"], ["<div class=\"notice\" id=\"activationNotice\"><b>Este visor todavía no está autorizado.</b> Llena los datos de la sucursal y envía la solicitud. El acceso se habilita únicamente cuando Control de Sistema Qué Comer!! la apruebe.</div>", "<div class=\"notice\" id=\"activationNotice\"><b>Registrar negocio.</b> Ingresa los datos del establecimiento para solicitar su activación.</div>"], ["    <div class=\"field\"><label>Identificador de este visor</label><div class=\"activation-code\" id=\"viewerDeviceId\"></div></div>\n", ""], ["async function req(path,opts={}){if(!A.dbUrl)throw new Error('Abre este visor desde Control de Sistema Qué Comer!!');", "async function req(path,opts={}){if(!A.dbUrl)throw new Error('No se pudo conectar al sistema central. Intenta nuevamente.');"], ["function updateBusinessView(){const name=A.accessStatus==='active'?(A.businessName||'Tu establecimiento'):'Activación requerida';", "function updateBusinessView(){const name=A.accessStatus==='active'?(A.businessName||'Tu establecimiento'):'Registrar negocio';"], ["if(!A.dbUrl)$('#businessInfoView').textContent='Este visor necesita la conexión generada por Control de Sistema Qué Comer!! o el enlace compartible del visor de negocio.';else if(A.accessStatus!=='active')$('#businessInfoView').textContent='🔒 Este visor no puede administrar el negocio hasta ser activado desde Control de Sistema Qué Comer!!.';", "if(!A.dbUrl)$('#businessInfoView').textContent='Registra tu negocio para comenzar.';else if(A.accessStatus!=='active')$('#businessInfoView').textContent='Registra tu negocio para comenzar.';"], ["function showActivationGate(message,type='pending'){A.accessStatus=type==='active'?'active':type;updateBusinessView();$('#viewerDeviceId').textContent=A.deviceId;", "function showActivationGate(message,type='pending'){A.accessStatus=type==='active'?'active':type;updateBusinessView();"], ["if(!A.dbUrl){A.accessStatus='no-connection';showActivationGate('<b>Sin conexión.</b> Abre el enlace compartible generado en Control de Sistema Qué Comer!!.','no-connection');setConn(false,'Abre desde Control de Sistema');return false}", "if(!A.dbUrl){A.accessStatus='no-connection';showActivationGate('<b>Registrar negocio.</b> Ingresa los datos del establecimiento para comenzar.','new');setConn(false,'Registrar negocio');return false}"], ["showActivationGate('<b>Activación requerida.</b> Llena los datos de la sucursal y envía la solicitud. El administrador deberá aprobar este visor desde Control de Sistema Qué Comer!!.','new');setConn(false,'Requiere activación');return false", "showActivationGate('<b>Registrar negocio.</b> Ingresa los datos del establecimiento y envía la solicitud.','new');setConn(false,'Registrar negocio');return false"], ["$('#requestActivation').onclick=async()=>{if(!A.dbUrl){toast('Abre este visor desde Control de Sistema Qué Comer!!');return}", "$('#requestActivation').onclick=async()=>{if(!A.dbUrl){toast('No se pudo conectar al sistema central. Intenta nuevamente.');return}"]];
-    for(const [from,to] of changes)html=html.split(from).join(to);
-    const termsTag='<script src="./business-terms-v1.18.11.js?v=1.18.13"></scr'+'ipt>';
-    html=html.replace('</body>',termsTag+'</body>');
-    document.open();
-    document.write(html);
-    document.close();
-  }catch(e){
-    document.body.innerHTML='<main style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:560px;margin:80px auto;padding:24px"><h2>No se pudo cargar Qué Comer</h2><p>Intenta nuevamente en unos momentos.</p><button onclick="location.reload()" style="padding:10px 14px;border:0;border-radius:10px;background:#ff6b35;color:#fff;font-weight:700">Reintentar</button></main>';
+  function decode(value){
+    try{let s=String(value||'').replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(atob(s))}catch(e){return null}
   }
+  function bootstrap(){
+    const p=new URLSearchParams(location.search);boot=decode(p.get('qci'))||{};
+    const db=String(boot.qcdb||p.get('qcdb')||p.get('db')||'').trim().replace(/\/+$/,'');
+    if(db){localStorage.setItem('qc_platform_db',db);localStorage.setItem('qc_db_url',db);localStorage.setItem('qc_business_runtime_db',db);localStorage.setItem('qc_admin_db_url',db)}
+    if(boot.qcf!=null&&Number.isFinite(Number(boot.qcf)))localStorage.setItem('qc_platform_fee_v08',String(Number(boot.qcf)));
+    if(boot.qcl!=null&&Number.isFinite(Number(boot.qcl)))localStorage.setItem('qc_loyalty_pct',String(Number(boot.qcl)));
+    if(boot.biz)localStorage.setItem('qc_last_business_id',String(boot.biz));
+  }
+  function dbUrl(){return String(localStorage.getItem('qc_business_runtime_db')||localStorage.getItem('qc_platform_db')||localStorage.getItem('qc_db_url')||'').replace(/\/+$/,'')}
+  function deviceId(){let id=localStorage.getItem('qc_viewer_device_id');if(!id){id='viewer_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,11);localStorage.setItem('qc_viewer_device_id',id)}return id}
+  function makeId(){return 'act_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,9)}
+  function normalizeName(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase().replace(/\s+/g,' ')}
+  function showError(msg){errorBox.textContent=msg;errorBox.style.display='block'}
+  function hideError(){errorBox.textContent='';errorBox.style.display='none'}
+  function openTerms(data){pending=data;document.getElementById('termsBusinessName').textContent='“'+data.name+'”';accept.checked=false;confirmBtn.disabled=true;hideError();overlay.classList.add('show')}
+  function closeTerms(){pending=null;overlay.classList.remove('show');accept.checked=false;confirmBtn.disabled=true;hideError()}
+
+  bootstrap();
+  if('serviceWorker' in navigator){
+    const check=()=>navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{});
+    check();window.addEventListener('focus',check);
+  }
+
+  accept.onchange=()=>{confirmBtn.disabled=!accept.checked};
+  document.getElementById('declineTerms').onclick=closeTerms;
+
+  confirmBtn.onclick=async()=>{
+    if(!accept.checked||!pending)return;
+    const db=dbUrl();if(!db){showError('No se pudo conectar al sistema central.');return}
+    confirmBtn.disabled=true;hideError();
+    const requestId=makeId(),now=new Date().toISOString(),did=deviceId();
+    const payload={id:requestId,deviceId:did,requestedBusinessId:String(boot.biz||localStorage.getItem('qc_last_business_id')||''),businessName:pending.name,normalizedBusinessName:normalizeName(pending.name),phone:pending.phone,address:pending.address,status:'pending',createdAt:now,updatedAt:now,source:'visor-negocio-compartido',termsAccepted:true,termsVersion:TERMS_VERSION,termsAcceptedAt:now,termsRepresentativeConfirmed:true,termsDeviceId:did,appVersion:VERSION};
+    try{
+      const r=await fetch(db+'/quecomer/activationRequests/'+encodeURIComponent(requestId)+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      if(!r.ok)throw new Error('Firebase '+r.status);
+      sessionStorage.setItem('qc_activation_request_id',requestId);
+      closeTerms();
+      frame.contentWindow.location.reload();
+    }catch(e){confirmBtn.disabled=false;showError('No se pudo enviar la solicitud. Intenta nuevamente.')}
+  };
+
+  frame.addEventListener('load',()=>{
+    loading.style.display='none';
+    try{
+      const d=frame.contentDocument;
+      const title=d.querySelector('#activationModal .modalhead h3');if(title)title.textContent='Registrar negocio';
+      const notice=d.getElementById('activationNotice');if(notice)notice.innerHTML='<b>Registrar negocio.</b> Ingresa los datos del establecimiento para solicitar su activación.';
+      const device=d.getElementById('viewerDeviceId');if(device?.closest('.field'))device.closest('.field').style.display='none';
+      const help=d.getElementById('activationHelp');if(help)help.style.display='none';
+      const btn=d.getElementById('requestActivation');
+      if(btn){
+        btn.onclick=()=>{
+          const name=(d.getElementById('requestBusinessName')?.value||'').trim();
+          if(!name){d.getElementById('requestBusinessName')?.focus();return}
+          openTerms({name,phone:(d.getElementById('requestBusinessPhone')?.value||'').trim(),address:(d.getElementById('requestBusinessAddress')?.value||'').trim()});
+        };
+      }
+    }catch(e){console.warn('No fue posible personalizar el registro',e)}
+  });
+  setTimeout(()=>{loading.style.display='none'},5000);
 })();
 </script>
 </body>
