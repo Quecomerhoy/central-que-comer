@@ -10,6 +10,54 @@
 </head>
 <body>
 <script>
+function qcB64uEncode(data){
+  try{return btoa(JSON.stringify(data)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}catch(e){return''}
+}
+function qcB64uDecode(value){
+  try{
+    let s=String(value||'').replace(/-/g,'+').replace(/_/g,'/');
+    while(s.length%4)s+='=';
+    return JSON.parse(atob(s));
+  }catch(e){return null}
+}
+function qcPersistBootstrap(){
+  try{
+    const p=new URLSearchParams(location.search);
+    let data=qcB64uDecode(p.get('qci'));
+    if(!data){
+      const db=(p.get('qcdb')||p.get('db')||'').trim().replace(/\/+$/,'');
+      if(db||p.get('biz')||p.get('newbiz'))data={
+        qcdb:db,
+        qcf:p.get('qcf'),
+        qcl:p.get('qcl'),
+        biz:p.get('biz')||'',
+        newbiz:p.get('newbiz')||'0'
+      };
+    }
+    if(!data)return;
+    const db=String(data.qcdb||'').trim().replace(/\/+$/,'');
+    if(db){
+      localStorage.setItem('qc_platform_db',db);
+      localStorage.setItem('qc_db_url',db);
+      localStorage.setItem('qc_business_runtime_db',db);
+      localStorage.setItem('qc_admin_db_url',db);
+    }
+    if(data.qcf!==undefined&&data.qcf!==null&&Number.isFinite(Number(data.qcf)))localStorage.setItem('qc_platform_fee_v08',String(Number(data.qcf)));
+    if(data.qcl!==undefined&&data.qcl!==null&&Number.isFinite(Number(data.qcl)))localStorage.setItem('qc_loyalty_pct',String(Number(data.qcl)));
+    if(data.biz)localStorage.setItem('qc_last_business_id',String(data.biz));
+    window.name='QC_BOOT_V1:'+encodeURIComponent(JSON.stringify(data));
+    const persistent={...data,newbiz:'0'};
+    const token=qcB64uEncode(persistent);
+    if(token){
+      p.set('qci',token);
+      ['qcdb','db','qcf','qcl','biz','newbiz'].forEach(k=>p.delete(k));
+      const qs=p.toString();
+      history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')+location.hash);
+    }
+  }catch(e){}
+}
+qcPersistBootstrap();
+
 const qcAutoUpdate=()=>{
   if(!('serviceWorker' in navigator))return;
   let reloading=false;
@@ -34,9 +82,10 @@ qcAutoUpdate();
 
 (async()=>{
   try{
-    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-principal-negocio-core.html?v=1.17.4",{cache:'no-store'});
+    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-principal-negocio-core.html?v=1.17.6",{cache:'no-store'});
     if(!r.ok)throw new Error('No se pudo cargar el visor');
     let html=await r.text();
+    html=html.replace(/<link\s+rel=[\"']manifest[\"'][^>]*>\s*/ig,'');
     const changes=[["<div class=\"modalhead\"><h3>Activación del visor de negocio</h3></div>", "<div class=\"modalhead\"><h3>Registrar negocio</h3></div>"], ["<div class=\"notice\" id=\"activationNotice\"><b>Este visor todavía no está autorizado.</b> Llena los datos de la sucursal y envía la solicitud. El acceso se habilita únicamente cuando Control de Sistema Qué Comer!! la apruebe.</div>", "<div class=\"notice\" id=\"activationNotice\"><b>Registrar negocio.</b> Ingresa los datos del establecimiento para solicitar su activación.</div>"], ["    <div class=\"field\"><label>Identificador de este visor</label><div class=\"activation-code\" id=\"viewerDeviceId\"></div></div>\n", ""], ["async function req(path,opts={}){if(!A.dbUrl)throw new Error('Abre este visor desde Control de Sistema Qué Comer!!');", "async function req(path,opts={}){if(!A.dbUrl)throw new Error('No se pudo conectar al sistema central. Intenta nuevamente.');"], ["function updateBusinessView(){const name=A.accessStatus==='active'?(A.businessName||'Tu establecimiento'):'Activación requerida';", "function updateBusinessView(){const name=A.accessStatus==='active'?(A.businessName||'Tu establecimiento'):'Registrar negocio';"], ["if(!A.dbUrl)$('#businessInfoView').textContent='Este visor necesita la conexión generada por Control de Sistema Qué Comer!! o el enlace compartible del visor de negocio.';else if(A.accessStatus!=='active')$('#businessInfoView').textContent='🔒 Este visor no puede administrar el negocio hasta ser activado desde Control de Sistema Qué Comer!!.';", "if(!A.dbUrl)$('#businessInfoView').textContent='Registra tu negocio para comenzar.';else if(A.accessStatus!=='active')$('#businessInfoView').textContent='Registra tu negocio para comenzar.';"], ["function showActivationGate(message,type='pending'){A.accessStatus=type==='active'?'active':type;updateBusinessView();$('#viewerDeviceId').textContent=A.deviceId;", "function showActivationGate(message,type='pending'){A.accessStatus=type==='active'?'active':type;updateBusinessView();"], ["if(!A.dbUrl){A.accessStatus='no-connection';showActivationGate('<b>Sin conexión.</b> Abre el enlace compartible generado en Control de Sistema Qué Comer!!.','no-connection');setConn(false,'Abre desde Control de Sistema');return false}", "if(!A.dbUrl){A.accessStatus='no-connection';showActivationGate('<b>Registrar negocio.</b> Ingresa los datos del establecimiento para comenzar.','new');setConn(false,'Registrar negocio');return false}"], ["showActivationGate('<b>Activación requerida.</b> Llena los datos de la sucursal y envía la solicitud. El administrador deberá aprobar este visor desde Control de Sistema Qué Comer!!.','new');setConn(false,'Requiere activación');return false", "showActivationGate('<b>Registrar negocio.</b> Ingresa los datos del establecimiento y envía la solicitud.','new');setConn(false,'Registrar negocio');return false"], ["$('#requestActivation').onclick=async()=>{if(!A.dbUrl){toast('Abre este visor desde Control de Sistema Qué Comer!!');return}", "$('#requestActivation').onclick=async()=>{if(!A.dbUrl){toast('No se pudo conectar al sistema central. Intenta nuevamente.');return}"]];
     for(const [from,to] of changes)html=html.split(from).join(to);
     document.open();
