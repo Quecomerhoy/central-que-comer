@@ -9,7 +9,7 @@
 <script>
 (async()=>{
   try{
-    const r=await fetch("./_core/que-comer-pedidos-core.html?v=1.17.2",{cache:'no-store'});
+    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-pedidos-core.html?v=1.17.3",{cache:'no-store'});
     if(!r.ok)throw new Error('No se pudo cargar el visor');
     let html=await r.text();
     const changes=[["La primera vez que uses Qué Comer!! necesitamos tus datos para identificar y entregar correctamente tus pedidos. Una vez guardados quedarán bloqueados en este navegador.", "La primera vez que uses Qué Comer!! necesitamos tus datos para identificar y entregar correctamente tus pedidos. Después los usaremos automáticamente en tus próximas compras."], ["Tus datos ya fueron registrados y están bloqueados para evitar cambios frecuentes. Se utilizarán automáticamente en tus pedidos.", "Tus datos ya están registrados y se utilizarán automáticamente en tus pedidos."], ["toast('Los datos ya están bloqueados')", "toast('Tus datos ya están registrados')"], ["toast('Datos registrados y bloqueados')", "toast('Datos registrados correctamente')"]];
