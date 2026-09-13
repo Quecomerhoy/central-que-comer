@@ -45,12 +45,7 @@ function qcPersistBootstrap(){
     if(data.qcf!==undefined&&data.qcf!==null&&Number.isFinite(Number(data.qcf)))localStorage.setItem('qc_platform_fee_v08',String(Number(data.qcf)));
     if(data.qcl!==undefined&&data.qcl!==null&&Number.isFinite(Number(data.qcl)))localStorage.setItem('qc_loyalty_pct',String(Number(data.qcl)));
     if(data.biz)localStorage.setItem('qc_last_business_id',String(data.biz));
-
-    // Entrega los datos al core aunque la app instalada tenga almacenamiento aislado.
     window.name='QC_BOOT_V1:'+encodeURIComponent(JSON.stringify(data));
-
-    // Deja un enlace opaco y persistente para "Agregar a pantalla de inicio".
-    // newbiz es de un solo uso: el core lo recibe ahora, pero no se repite en futuros arranques.
     const persistent={...data,newbiz:'0'};
     const token=qcB64uEncode(persistent);
     if(token){
@@ -87,7 +82,7 @@ qcAutoUpdate();
 
 (async()=>{
   try{
-    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-principal-negocio-core.html?v=1.18.0",{cache:'no-store'});
+    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-principal-negocio-core.html?v=1.17.6",{cache:'no-store'});
     if(!r.ok)throw new Error('No se pudo cargar el visor');
     let html=await r.text();
     html=html.replace(/<link\s+rel=[\"']manifest[\"'][^>]*>\s*/ig,'');

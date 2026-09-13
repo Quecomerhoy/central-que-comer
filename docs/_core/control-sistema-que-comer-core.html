@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="manifest" href="manifest-control.webmanifest">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/que-comer-icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/que-comer-icon-192.png">
@@ -334,32 +334,7 @@ $('#csvBtn').onclick=()=>{const orders=globalOrders(),sales=orders.reduce((a,o)=
 loadAll();setInterval(()=>{if(C.dbUrl)loadAll()},12000);
 </script><script>
 if('serviceWorker' in navigator){
-  let qcSwRefreshing=false;
-  const qcCheckSw=async()=>{
-    try{
-      const reg=await navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'});
-      await reg.update().catch(()=>{});
-      if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
-      reg.addEventListener('updatefound',()=>{
-        const worker=reg.installing;
-        if(!worker)return;
-        worker.addEventListener('statechange',()=>{
-          if(worker.state==='installed'&&navigator.serviceWorker.controller){
-            worker.postMessage({type:'SKIP_WAITING'});
-          }
-        });
-      });
-    }catch(e){}
-  };
-  navigator.serviceWorker.addEventListener('controllerchange',()=>{
-    if(qcSwRefreshing)return;
-    qcSwRefreshing=true;
-    location.reload();
-  });
-  window.addEventListener('load',qcCheckSw);
-  window.addEventListener('focus',qcCheckSw);
-  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')qcCheckSw()});
-  setInterval(qcCheckSw,60000);
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
 }
 </script>
 </body></html>
