@@ -8,32 +8,30 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#101828">
 <title>Control de Sistema Qué Comer!!</title>
-<style>
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f3f5f7;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}#qcFrame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#f3f5f7;visibility:hidden}#qcLoading{position:fixed;inset:0;display:grid;place-items:center;color:#344054;background:#f3f5f7;font-weight:800}#qcLoading>div{background:#fff;border:1px solid #e4e7ec;border-radius:16px;padding:18px 22px;box-shadow:0 12px 34px rgba(16,24,40,.08)}
-</style>
+<style>html,body{margin:0;min-height:100%;background:#f3f5f7;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}#qcLoading{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#f3f5f7;color:#344054;font-weight:800}#qcLoading>div{background:#fff;border:1px solid #e4e7ec;border-radius:16px;padding:18px 22px;box-shadow:0 12px 34px rgba(16,24,40,.08)}</style>
 </head>
 <body>
 <div id="qcLoading"><div>Abriendo Control de Qué Comer…</div></div>
-<iframe id="qcFrame" title="Control de Sistema Qué Comer" src="./_core/control-sistema-que-comer-core.html?v=1.18.5"></iframe>
 <script>
 (function(){
-  const frame=document.getElementById('qcFrame'),loading=document.getElementById('qcLoading');
-  function registerSW(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{})}
+  const version='1.18.7';
+  const loadExternal=src=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.async=false;s.onload=resolve;s.onerror=()=>reject(new Error('No se pudo cargar '+src));document.body.appendChild(s)});
+  const registerSW=()=>{if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{})};
   registerSW();window.addEventListener('focus',registerSW);
-  frame.addEventListener('load',()=>{
+  (async()=>{
     try{
-      const d=frame.contentDocument;
-      const dash=d.createElement('script');dash.src='../dashboard-v1.18.js?v=1.18.5';dash.async=false;
-      dash.onload=()=>{
-        const modules=d.createElement('script');modules.src='../control-modules-v1.18.2.js?v=1.18.5';modules.async=false;
-        modules.onload=()=>{frame.style.visibility='visible';loading.style.display='none'};
-        modules.onerror=()=>{loading.innerHTML='<div>No se pudieron cargar los módulos. Recarga la página.</div>'};
-        d.body.appendChild(modules);
-      };
-      dash.onerror=()=>{loading.innerHTML='<div>No se pudo cargar el Dashboard. Recarga la página.</div>'};
-      d.body.appendChild(dash);
-    }catch(e){loading.innerHTML='<div>No se pudo iniciar el Control central. Recarga la página.</div>'}
-  });
+      const coreUrl='./_core/control-sistema-que-comer-core.html?v='+version;
+      const r=await fetch(coreUrl,{cache:'no-store'});
+      if(!r.ok)throw new Error('No se pudo cargar el núcleo del Control');
+      const parsed=new DOMParser().parseFromString(await r.text(),'text/html');
+      const scripts=[...parsed.querySelectorAll('script')];scripts.forEach(s=>s.remove());
+      [...parsed.head.children].forEach(node=>{const tag=node.tagName;if(tag==='STYLE'||tag==='LINK'||tag==='META')document.head.appendChild(document.importNode(node,true));if(tag==='TITLE')document.title=node.textContent||document.title});
+      document.body.replaceChildren(...[...parsed.body.childNodes].map(n=>document.importNode(n,true)));
+      for(const original of scripts){if(original.getAttribute('src')){await loadExternal(new URL(original.getAttribute('src'),new URL(coreUrl,location.href)).href)}else{const s=document.createElement('script');s.textContent=original.textContent||'';document.body.appendChild(s)}}
+      await loadExternal('./dashboard-v1.18.js?v='+version);
+      await loadExternal('./control-modules-v1.18.2.js?v='+version);
+    }catch(e){document.body.innerHTML='<main style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:620px;margin:80px auto;padding:24px"><h2>No se pudo cargar el Control central</h2><p>'+String(e&&e.message||e)+'</p><button onclick="location.reload()" style="padding:10px 14px;border:0;border-radius:10px;background:#ff6b35;color:#fff;font-weight:700">Reintentar</button></main>'}
+  })();
 })();
 </script>
 </body>
