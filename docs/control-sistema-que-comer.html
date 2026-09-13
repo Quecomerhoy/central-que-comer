@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest-control.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/que-comer-icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/que-comer-icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/que-comer-icon-512.png">
+<link rel="shortcut icon" href="assets/favicon.png">
+<meta name="theme-color" content="#101828">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Qué Comer Control">
+<meta name="application-name" content="Qué Comer Control"><title>Control de Sistema Qué Comer!!</title>
+<style>
+:root{--bg:#f3f5f7;--card:#fff;--ink:#182230;--muted:#667085;--line:#e4e7ec;--brand:#ff6b35;--dark:#101828;--ok:#067647;--danger:#b42318;--warn:#b54708}*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input{font:inherit}button{cursor:pointer}.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}.topin{max-width:1400px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:12px}.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:950}.mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--dark),#344054);color:#fff;display:grid;place-items:center}.brand small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}.grow{flex:1}.status{font-size:12px;color:var(--muted);font-weight:800;display:flex;gap:7px;align-items:center}.dot{width:9px;height:9px;border-radius:50%;background:#f79009}.dot.ok{background:#12b76a}.btn{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:10px;font-weight:850}.btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}.btn.dark{background:var(--dark);color:#fff;border-color:var(--dark)}.btn.danger{background:#fff;color:var(--danger);border-color:#fecdca}.shell{max-width:1400px;margin:18px auto 70px;padding:0 18px}.hero{background:linear-gradient(135deg,#101828,#344054);color:#fff;border-radius:20px;padding:20px;margin-bottom:15px}.hero h1{margin:0 0 5px;font-size:28px}.hero p{margin:0;color:#d0d5dd}.filters{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:14px 0}.filters input{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#fff}.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:15px}.metric{background:#fff;border:1px solid var(--line);border-radius:15px;padding:15px}.metric small{color:var(--muted);font-weight:800}.metric strong{display:block;font-size:23px;margin-top:5px}.grid2{display:grid;grid-template-columns:1.55fr 1fr;gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden;margin-bottom:14px}.cardhead{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}.cardhead h2{font-size:18px;margin:0;flex:1}.cardbody{padding:15px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:880px}.table th,.table td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:left;font-size:12px;vertical-align:middle}.table th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.pill{display:inline-block;padding:5px 8px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;background:#ecfdf3;color:var(--ok)}.pill.blocked{background:#fef3f2;color:var(--danger)}.pill.pending{background:#fff4e8;color:#b54708}.pill.rejected{background:#fef3f2;color:var(--danger)}.pill.active{background:#ecfdf3;color:var(--ok)}.rank{display:grid;gap:9px}.rankrow{border:1px solid var(--line);border-radius:12px;padding:10px 12px}.ranktop{display:flex;gap:10px;align-items:center}.ranknum{width:27px;height:27px;border-radius:8px;background:#f2f4f7;display:grid;place-items:center;font-weight:900}.rankname{font-weight:900;flex:1}.rankname small{display:block;color:var(--muted);font-weight:600;margin-top:2px}.rankqty{font-weight:950;font-size:18px}.bar{height:7px;border-radius:999px;background:#f2f4f7;margin-top:8px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--brand),#ff9f1c)}.empty{text-align:center;color:var(--muted);padding:25px}.overlay{position:fixed;inset:0;background:rgba(16,24,40,.55);z-index:60;display:none}.overlay.show{display:block}.modal{position:fixed;z-index:70;left:50%;top:50%;transform:translate(-50%,-50%);width:min(620px,94vw);background:#fff;border-radius:18px;display:none;box-shadow:0 30px 80px rgba(0,0,0,.25)}.modal.show{display:block}.modalhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center}.modalhead h3{margin:0;flex:1}.close{border:0;background:#f2f4f7;width:36px;height:36px;border-radius:10px;font-size:18px}.modalbody{padding:17px}.field{margin-bottom:11px}.field label{display:block;font-size:12px;font-weight:850;color:#475467;margin-bottom:5px}.field input{width:100%;padding:10px 11px;border:1px solid #d0d5dd;border-radius:10px}.notice{padding:11px 12px;border:1px solid #fedf89;background:#fffaeb;color:#93370d;border-radius:10px;font-size:12px;margin-bottom:12px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(15px);opacity:0;background:#101828;color:#fff;border-radius:12px;padding:11px 14px;z-index:100;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translateX(-50%)}.small{font-size:11px;color:var(--muted)}
+@media(max-width:1000px){.metrics{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}@media(max-width:560px){.shell{padding:0 10px}.topin{padding:10px}.brand{font-size:17px}.metrics{grid-template-columns:1fr 1fr}.metric strong{font-size:19px}.status .txt{display:none}}
+@media print{.top,.filters,.no-print,.btn{display:none!important}.shell{max-width:none;margin:0;padding:0}.hero{color:#000;background:#fff;border:1px solid #ccc}.metrics{grid-template-columns:repeat(5,1fr)}body{background:#fff}.card,.metric{box-shadow:none;break-inside:avoid}.table{min-width:0}}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.copybox{display:flex;gap:8px;align-items:center}.copybox input{flex:1;min-width:0}.copybox .btn{white-space:nowrap}@media(max-width:560px){.copybox{flex-wrap:wrap}.copybox input{flex-basis:100%}}.launch-note{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.launch-note h4{margin:0 0 6px}.launch-note p{margin:0 0 10px;color:var(--muted);font-size:12px}</style></head><body>
+<header class="top"><div class="topin"><div class="brand"><div class="mark">QC</div><div>Control de Sistema Qué Comer!!<small>Administración central</small></div></div><div class="grow"></div><div class="status"><span class="dot" id="dot"></span><span class="txt" id="connText">Sin configurar</span></div><button class="btn dark" id="configBtn">⚙️ Configuración</button></div></header>
+<main class="shell"><section class="hero"><h1>Control central Qué Comer!!</h1><p>Pedidos, ventas, comisiones, productos más solicitados y control de sucursales.</p></section><div class="filters no-print"><b>Pruebas locales:</b><button class="btn primary" id="quickMenu">🍴 Abrir menú</button><button class="btn" id="quickBusiness">🏪 Nuevo negocio</button><span class="small">El mismo enlace de Visor de negocio puede compartirse con varias sucursales. Cada navegador solicita activación y se vincula por nombre del negocio.</span></div>
+<div class="filters"><b>Periodo:</b><input type="month" id="monthFilter"><button class="btn" id="currentMonth">Este mes</button><button class="btn" id="allTime">Todo</button><div class="grow"></div><button class="btn no-print" id="refresh">↻ Actualizar</button><button class="btn no-print" id="csvBtn">📊 Exportar a Excel (.xls)</button><button class="btn primary no-print" id="printBtn">Imprimir / PDF</button></div>
+<section class="metrics"><div class="metric"><small>Pedidos generales</small><strong id="mOrders">0</strong></div><div class="metric"><small>Venta general</small><strong id="mSales">$0.00</strong></div><div class="metric"><small>Comisión Qué Comer!!</small><strong id="mFee">$0.00</strong></div><div class="metric"><small>Neto a negocios</small><strong id="mNet">$0.00</strong></div><div class="metric"><small>Comisión efectiva</small><strong id="mPct">0.00%</strong></div></section>
+
+<section class="card no-print" id="activationCard">
+  <div class="cardhead">
+    <h2>Solicitudes de activación de visores</h2>
+    <span class="pill pending" id="pendingActivationCount">0 pendientes</span>
+  </div>
+  <div class="cardbody">
+    <div class="notice">Un negocio nuevo no obtiene acceso por tener el archivo o enlace. Primero llena sus datos en el visor y envía una solicitud; aquí debes aprobarla con <b>Activar visor</b>.</div>
+    <div class="tablewrap">
+      <table class="table">
+        <thead><tr><th>Fecha</th><th>Negocio / sucursal</th><th>Contacto</th><th>Dispositivo</th><th>Estado</th><th>Control</th></tr></thead>
+        <tbody id="activationRows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="grid2"><section class="card"><div class="cardhead"><h2>Reporte por sucursal</h2><span class="small" id="periodLabel"></span></div><div class="cardbody"><div class="tablewrap"><table class="table"><thead><tr><th>Sucursal</th><th>Estado</th><th>Comisión asignada</th><th>Pedidos</th><th>Venta</th><th>Comisión cobrada</th><th>% efectivo</th><th>Neto negocio</th><th>Productos</th><th class="no-print">Control</th></tr></thead><tbody id="branchRows"></tbody></table></div></div></section>
+<section class="card"><div class="cardhead"><h2>Lo más solicitado</h2></div><div class="cardbody"><div class="rank" id="ranking"></div></div></section></div>
+<section class="card"><div class="cardhead"><h2>Detalle mensual de ventas</h2><span class="small grow">El reset limpia solo este reporte central; el historial de cada sucursal se conserva.</span><button class="btn danger no-print" id="resetMonthlySales">↺ Reset del mes</button></div><div class="cardbody"><div class="tablewrap"><table class="table"><thead><tr><th>Fecha</th><th>Pedido</th><th>Cliente</th><th>Sucursales</th><th>Total</th><th>Comisión</th><th>Neto</th></tr></thead><tbody id="orderRows"></tbody></table></div></div></section></main>
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="configModal"><div class="modalhead"><h3>Configuración central</h3><button class="close" data-close>×</button></div><div class="modalbody">
+<div class="notice" id="configNotice">Los tres visores trabajan desde esta publicación central. Para futuras actualizaciones solo reemplaza la carpeta <b>docs</b> del repositorio central-que-comer; no necesitas volver a editar los otros repositorios.</div>
+<div class="field"><label>URL de Firebase Realtime Database</label><input id="dbUrl" placeholder="https://tu-proyecto-default-rtdb.firebaseio.com"></div>
+<div class="field"><label>Visor Pedidos / Menú · ruta central automática</label><input id="githubPedidosUrl" readonly></div>
+<div class="field"><label>Enlace público para clientes · Pedidos / Menú</label><div class="copybox"><input id="menuShareUrl" readonly><button class="btn" id="copyMenuShare">Copiar</button><button class="btn" id="openMenuShare">Abrir</button></div><div class="small" style="margin-top:5px">Este enlace se genera desde la misma carpeta central y transmite automáticamente la conexión de Firebase.</div></div>
+<div class="field"><label>Visor de negocio · ruta central automática</label><input id="githubNegocioUrl" readonly></div>
+<div class="field"><label>Enlace compartible para negocios</label><div class="copybox"><input id="businessShareUrl" readonly><button class="btn" id="copyBusinessShare">Copiar</button><button class="btn" id="openBusinessShare">Abrir</button></div><div class="small" style="margin-top:5px">El mismo enlace sirve para todos los negocios; cada dispositivo queda vinculado al establecimiento que activas desde Control.</div></div>
+<div class="field"><label>Comisión predeterminada de Qué Comer!! (%)</label><input id="defaultFee" type="number" min="0" max="100" step=".01" value="10"></div>
+<div class="field"><label>Recompensa para clientes / saldo Qué Comer Hoy (%)</label><input id="loyaltyPct" type="number" min="0" max="100" step=".01" value="1"><div class="small" style="margin-top:5px">Por defecto 1%. Se acredita cuando el negocio finaliza el pedido. El cliente puede usar el saldo acumulado en compras posteriores.</div></div>
+<div class="actions"><button class="btn primary" id="saveConfig">Guardar y conectar</button><button class="btn" id="testConfig">Probar conexión</button></div>
+<div class="launch-note"><h4>Visores del ecosistema central</h4><p>Pedidos, Negocio y Control viven en esta misma carpeta. Los botones siempre abren la versión central actual.</p><div class="actions"><button class="btn primary" id="openMenuLocal">🍴 Abrir menú local</button><button class="btn" id="openBusinessLocal">🏪 Abrir nuevo negocio local</button></div></div>
+</div></div>
+<div class="modal" id="commissionModal"><div class="modalhead"><h3>Comisión por sucursal</h3><button class="close" data-close>×</button></div><div class="modalbody">
+  <div class="notice">La comisión la administra únicamente Control de Sistema Qué Comer!!. El negocio no puede modificarla desde su visor.</div>
+  <input type="hidden" id="commissionBusinessId">
+  <div class="field"><label>Sucursal</label><input id="commissionBusinessName" readonly></div>
+  <div class="field"><label>Comisión asignada (%)</label><input id="branchCommissionPct" type="number" min="0" max="100" step="0.01" value="10"></div>
+  <div class="actions"><button class="btn primary" id="saveBranchCommission">Guardar comisión</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+const C={
+  dbUrl:normalizeDb(localStorage.getItem('qc_control_db')||localStorage.getItem('qc_platform_db')||localStorage.getItem('qc_admin_db_url')||''),
+  githubPedidosUrl:localStorage.getItem('qc_github_pedidos')||localStorage.getItem('qc_platform_github')||localStorage.getItem('qc_public_menu_url')||'',
+  githubNegocioUrl:localStorage.getItem('qc_github_negocio')||'',
+  defaultFee:Number(localStorage.getItem('qc_platform_fee_v08')||10),
+  loyaltyPct:Number(localStorage.getItem('qc_loyalty_pct')||1),
+  businesses:{},products:{},orders:{},businessOrders:{},activationRequests:{},viewerAccess:{},deletedBusinesses:{},controlReportResets:{},period:'month'
+};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],
+money=n=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n||0)),
+esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function normalizeDb(v){v=(v||'').trim().replace(/\/+$/,'');return v.endsWith('.json')?v.slice(0,-5):v}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),2600)}
+function setConn(ok,t){$('#dot').classList.toggle('ok',ok);$('#connText').textContent=t}
+async function req(path,opts={}){if(!C.dbUrl)throw new Error('Configura Firebase');const r=await fetch(C.dbUrl+'/'+path+'.json',{cache:'no-store',...opts,headers:{'Content-Type':'application/json',...(opts.headers||{})}});if(!r.ok)throw new Error('Firebase respondió '+r.status);return r.json()}
+const get=p=>req(p),put=(p,d)=>req(p,{method:'PUT',body:JSON.stringify(d)}),patch=(p,d)=>req(p,{method:'PATCH',body:JSON.stringify(d)}),del=p=>req(p,{method:'DELETE'});
+function openModal(id){$('#overlay').classList.add('show');$(id).classList.add('show')}
+function closeModals(){$('#overlay').classList.remove('show');$$('.modal').forEach(m=>m.classList.remove('show'))}
+$$('[data-close]').forEach(b=>b.onclick=closeModals);$('#overlay').onclick=closeModals;
+function centralBaseUrl(){
+  try{return new URL('./',location.href).href}catch{return'./'}
+}
+function centralViewerUrl(file){
+  try{return new URL(file,centralBaseUrl()).href}catch{return file}
+}
+function syncCentralViewerUrls(){
+  C.githubPedidosUrl=centralViewerUrl('que-comer-pedidos.html');
+  C.githubNegocioUrl=centralViewerUrl('que-comer-principal-negocio.html');
+}
+function normalizeGitHubViewerUrl(value){
+  let raw=String(value||'').trim();if(!raw)return'';
+  if(!/^https?:\/\//i.test(raw))raw='https://'+raw.replace(/^\/+/, '');
+  try{
+    const u=new URL(raw);
+    const host=u.hostname.toLowerCase();
+    if(host==='github.com'||host==='www.github.com'){
+      const parts=u.pathname.split('/').filter(Boolean),user=parts[0]||'',repo=(parts[1]||'').replace(/\.git$/i,'');
+      if(user&&repo){
+        if(repo.toLowerCase()===(user+'.github.io').toLowerCase())return'https://'+user+'.github.io/';
+        return'https://'+user+'.github.io/'+repo+'/';
+      }
+    }
+    if(host.endsWith('.github.io')){u.hash='';return u.href}
+    return u.href
+  }catch{return String(value||'').trim()}
+}
+syncCentralViewerUrls();
+function buildViewerShareUrl(base,mode){
+  base=normalizeGitHubViewerUrl(base);if(!base||!C.dbUrl)return'';
+  try{
+    const u=new URL(base,location.href);
+    u.searchParams.set('qcdb',C.dbUrl);
+    u.searchParams.set('qcf',String(C.defaultFee));
+    u.searchParams.set('qcl',String(C.loyaltyPct));
+    u.searchParams.set('mode',mode);
+    return u.href
+  }catch{return''}
+}
+function buildMenuShareUrl(){return buildViewerShareUrl(C.githubPedidosUrl,'menu')}
+function buildBusinessShareUrl(){return buildViewerShareUrl(C.githubNegocioUrl,'business')}
+function updateShareFields(){const m=$('#menuShareUrl'),b=$('#businessShareUrl');if(m)m.value=buildMenuShareUrl();if(b)b.value=buildBusinessShareUrl()}
+function fillCentralConfig(){syncCentralViewerUrls();$('#dbUrl').value=C.dbUrl;$('#githubPedidosUrl').value=C.githubPedidosUrl;$('#githubNegocioUrl').value=C.githubNegocioUrl;$('#defaultFee').value=C.defaultFee;$('#loyaltyPct').value=C.loyaltyPct;updateShareFields()}
+$('#configBtn').onclick=()=>{fillCentralConfig();openModal('#configModal')};
+['dbUrl','defaultFee','loyaltyPct'].forEach(id=>$('#'+id)?.addEventListener('input',()=>{
+  const old={db:C.dbUrl,f:C.defaultFee,l:C.loyaltyPct};
+  C.dbUrl=normalizeDb($('#dbUrl').value);C.defaultFee=Math.max(0,Number($('#defaultFee').value||10));C.loyaltyPct=Math.max(0,Number($('#loyaltyPct').value||1));
+  syncCentralViewerUrls();updateShareFields();
+  C.dbUrl=old.db;C.defaultFee=old.f;C.loyaltyPct=old.l
+}));
+async function copyFromField(id,msg){const el=$(id),v=el?.value.trim();if(!v){toast('Guarda primero Firebase y la URL GitHub correspondiente');return}try{await navigator.clipboard.writeText(v);toast(msg)}catch(e){el.select();document.execCommand('copy');toast(msg)}}
+$('#copyMenuShare').onclick=()=>copyFromField('#menuShareUrl','Enlace público de Pedidos copiado');
+$('#copyBusinessShare').onclick=()=>copyFromField('#businessShareUrl','Enlace del visor de negocio copiado');
+$('#openMenuShare').onclick=()=>{const u=$('#menuShareUrl').value.trim();if(!u){toast('Guarda primero la configuración');return}window.open(u,'_blank')};
+$('#openBusinessShare').onclick=()=>{const u=$('#businessShareUrl').value.trim();if(!u){toast('Guarda primero la configuración');return}window.open(u,'_blank')};
+async function persistPlatformConfig(){if(!C.dbUrl)return;syncCentralViewerUrls();try{await put('quecomer/platform/config',{
+  githubPedidosUrl:C.githubPedidosUrl,
+  githubNegocioUrl:C.githubNegocioUrl,
+  githubUrl:C.githubPedidosUrl,
+  defaultFee:C.defaultFee,
+  loyaltyPct:C.loyaltyPct,
+  loyaltyModel:'monthly-cashback-v1',
+  commissionModel:'branch-v1',
+  businessIdentityModel:'name-v1',
+  updatedAt:new Date().toISOString()
+})}catch(e){console.warn('No se pudo guardar platform/config',e)}}
+$('#saveConfig').onclick=async()=>{
+  C.dbUrl=normalizeDb($('#dbUrl').value);C.defaultFee=Math.max(0,Number($('#defaultFee').value||10));C.loyaltyPct=Math.max(0,Number($('#loyaltyPct').value||1));syncCentralViewerUrls();
+  if(!C.dbUrl){toast('Escribe la URL de Firebase');return}
+  localStorage.setItem('qc_control_db',C.dbUrl);localStorage.setItem('qc_platform_db',C.dbUrl);localStorage.setItem('qc_github_pedidos',C.githubPedidosUrl);localStorage.setItem('qc_github_negocio',C.githubNegocioUrl);localStorage.setItem('qc_platform_github',C.githubPedidosUrl);localStorage.setItem('qc_platform_fee_v08',C.defaultFee);localStorage.setItem('qc_platform_fee',C.defaultFee);localStorage.setItem('qc_loyalty_pct',C.loyaltyPct);updateShareFields();
+  await persistPlatformConfig();$('#githubPedidosUrl').value=C.githubPedidosUrl;$('#githubNegocioUrl').value=C.githubNegocioUrl;updateShareFields();closeModals();await loadAll();toast('Configuración guardada · ecosistema central sincronizado')
+};
+$('#testConfig').onclick=async()=>{
+  const previous=C.dbUrl;C.dbUrl=normalizeDb($('#dbUrl').value);
+  if(!C.dbUrl){toast('Escribe la URL de Firebase');C.dbUrl=previous;return}
+  try{await get('quecomer');$('#configNotice').textContent='Firebase conectado. Los tres visores centrales usarán esta misma base.';toast('Conexión correcta')}
+  catch(e){$('#configNotice').textContent='No se pudo conectar: '+e.message;toast('No se pudo conectar')}
+  finally{C.dbUrl=normalizeDb($('#dbUrl').value)||previous}
+};
+function localSibling(file){try{return new URL(file,location.href).href}catch{return file}}
+function openWithBootstrap(file,payload){
+  if(!C.dbUrl){toast('Configura Firebase primero en Control de Sistema');return}
+  try{
+    const u=new URL(file,location.href);
+    u.searchParams.set('qcdb',C.dbUrl);u.searchParams.set('qcf',String(C.defaultFee));u.searchParams.set('qcl',String(C.loyaltyPct));
+    Object.entries(payload||{}).forEach(([k,v])=>{if(v!==null&&v!==undefined&&v!=='')u.searchParams.set(k,String(v))});
+    window.open(u.href,'_blank')
+  }catch(e){toast('La URL del visor no es válida')}
+}
+function targetUrl(configured,fallback){return normalizeGitHubViewerUrl(configured)||localSibling(fallback)}
+function openMenuLocal(){openWithBootstrap(targetUrl(C.githubPedidosUrl,'que-comer-pedidos.html'),{mode:'menu'})}
+function openBusinessLocal(id=null,isNew=false){
+  const target=targetUrl(C.githubNegocioUrl,'que-comer-principal-negocio.html');
+  openWithBootstrap(target,{biz:id||'',newbiz:isNew?'1':'0',mode:'business'})
+}
+$('#openMenuLocal').onclick=openMenuLocal;$('#openBusinessLocal').onclick=()=>openBusinessLocal(null,true);$('#quickMenu').onclick=openMenuLocal;$('#quickBusiness').onclick=()=>openBusinessLocal(null,true);
+
+function monthKey(d){const x=new Date(d);if(isNaN(x))return'';return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')}
+function inPeriod(o){if(C.period==='all')return true;return monthKey(o.createdAt)===$('#monthFilter').value}
+function fmtDate(s){const d=new Date(s);return isNaN(d)?String(s||''):d.toLocaleString('es-MX',{dateStyle:'short',timeStyle:'short'})}
+function shortId(id){return String(id||'').replace('ord_','').slice(-10).toUpperCase()}
+function normalizeBusinessName(name){
+  return String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase().replace(/\s+/g,' ')
+}
+function businessSlug(name){
+  return String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,42)||'negocio'
+}
+function businessIdFromName(name){
+  const base=businessSlug(name);
+  if(!C.businesses?.[base])return base;
+  const existing=C.businesses[base];
+  if(normalizeBusinessName(existing?.name)===normalizeBusinessName(name))return base;
+  return base+'-'+Math.random().toString(36).slice(2,6)
+}
+function findBusinessByName(name){
+  const key=normalizeBusinessName(name);
+  if(!key)return null;
+  const found=Object.entries(C.businesses||{}).find(([id,b])=>!C.deletedBusinesses?.[id]&&normalizeBusinessName(b?.name)===key);
+  return found?{id:found[0],...(found[1]||{})}:null
+}
+async function loadAll(){
+  if(!C.dbUrl){setConn(false,'Sin configurar');C.businesses={};C.products={};C.orders={};C.businessOrders={};C.activationRequests={};C.viewerAccess={};C.deletedBusinesses={};C.controlReportResets={};render();return}
+  try{
+    const [b,p,o,bo,ar,va,db,pc,cr]=await Promise.all([
+      get('quecomer/businesses'),get('quecomer/products'),get('quecomer/orders'),get('quecomer/businessOrders'),
+      get('quecomer/activationRequests'),get('quecomer/viewerAccess'),get('quecomer/deletedBusinesses').catch(()=>null),get('quecomer/platform/config').catch(()=>null),
+      get('quecomer/controlReportResets').catch(()=>null)
+    ]);
+    C.businesses=b||{};C.products=p||{};C.orders=o||{};C.businessOrders=bo||{};C.activationRequests=ar||{};C.viewerAccess=va||{};C.deletedBusinesses=db||{};C.controlReportResets=cr||{};
+    if(pc){
+      syncCentralViewerUrls();
+      if(pc.commissionModel==='branch-v1'&&Number.isFinite(Number(pc.defaultFee)))C.defaultFee=Number(pc.defaultFee);else C.defaultFee=10;if(Number.isFinite(Number(pc.loyaltyPct)))C.loyaltyPct=Math.max(0,Number(pc.loyaltyPct));else C.loyaltyPct=1;if(pc.commissionModel!=='branch-v1'||pc.loyaltyModel!=='monthly-cashback-v1')await persistPlatformConfig()
+    }else{C.defaultFee=10;C.loyaltyPct=1;syncCentralViewerUrls();await persistPlatformConfig()}localStorage.setItem('qc_platform_fee_v08',C.defaultFee);localStorage.setItem('qc_platform_fee',C.defaultFee);localStorage.setItem('qc_loyalty_pct',C.loyaltyPct)
+    localStorage.setItem('qc_platform_db',C.dbUrl);localStorage.setItem('qc_github_pedidos',C.githubPedidosUrl||'');localStorage.setItem('qc_github_negocio',C.githubNegocioUrl||'');localStorage.setItem('qc_platform_github',C.githubPedidosUrl||'');localStorage.setItem('qc_platform_fee',C.defaultFee);
+    setConn(true,'Conectado');render()
+  }catch(e){setConn(false,'Error');toast(e.message)}
+}
+function hiddenByCentralReset(o){
+  const month=monthKey(o?.createdAt),r=C.controlReportResets?.[month];
+  if(!r)return false;
+  const cutoff=Number(r.resetAtMs)||Date.parse(r.resetAt||''),created=Date.parse(o?.createdAt||'');
+  return Number.isFinite(cutoff)&&Number.isFinite(created)&&created<=cutoff
+}
+function globalOrders(){return Object.entries(C.orders||{}).map(([id,v])=>({id,...(v||{})})).filter(inPeriod).filter(o=>o.status!=='cancelado').filter(o=>!hiddenByCentralReset(o))}
+function branchOrders(id){const d=C.businessOrders?.[id]||{};return Object.entries(d).map(([oid,v])=>({id:oid,...(v||{})})).filter(inPeriod).filter(o=>o.status!=='cancelado').filter(o=>!hiddenByCentralReset(o))}
+function branchProducts(id){return Object.entries(C.products||{}).map(([id2,v])=>({id:id2,...(v||{})})).filter(p=>p.businessId===id)}
+function render(){
+  const gos=globalOrders(),sum=(arr,k)=>arr.reduce((a,x)=>a+Number(x[k]||0),0),sales=sum(gos,'total'),fee=sum(gos,'platformFee'),net=sales-fee;
+  $('#mOrders').textContent=gos.length;$('#mSales').textContent=money(sales);$('#mFee').textContent=money(fee);$('#mNet').textContent=money(net);$('#mPct').textContent=(sales?fee/sales*100:0).toFixed(2)+'%';
+  $('#periodLabel').textContent=C.period==='all'?'Histórico completo':('Mes '+($('#monthFilter').value||''));
+  renderActivations();renderBranches();renderRanking(gos);renderOrderRows(gos)
+}
+function activationList(){return Object.entries(C.activationRequests||{}).map(([id,v])=>({id,...(v||{})})).sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||'')))}
+function renderActivations(){
+  const list=activationList(),pending=list.filter(r=>r.status==='pending');$('#pendingActivationCount').textContent=pending.length+' pendiente'+(pending.length===1?'':'s');
+  const visible=[...pending,...list.filter(r=>r.status!=='pending').slice(0,8)];
+  $('#activationRows').innerHTML=visible.length?visible.map(r=>{
+    const st=r.status||'pending',label=st==='active'?'ACTIVADO':st==='rejected'?'RECHAZADO':'PENDIENTE';
+    return `<tr><td>${esc(fmtDate(r.createdAt))}</td><td><b>${esc(r.businessName||'Sin nombre')}</b>${r.requestedBusinessId?`<div class="small">Solicitud para: ${esc(r.requestedBusinessId)}</div>`:''}<div class="small">${esc(r.address||'')}</div></td><td>${esc(r.phone||'—')}</td><td><span class="small">${esc((r.deviceId||'').slice(0,24))}</span></td><td><span class="pill ${st==='active'?'active':st==='rejected'?'rejected':'pending'}">${label}</span></td><td>${st==='pending'?`<div class="actions"><button class="btn primary" data-activate="${esc(r.id)}">Activar visor</button><button class="btn danger" data-reject="${esc(r.id)}">Rechazar</button></div>`:(r.businessId?`<button class="btn" data-openbiz="${esc(r.businessId)}">Abrir visor</button>`:'—')}</td></tr>`
+  }).join(''):`<tr><td colspan="6">No hay solicitudes de activación.</td></tr>`;
+  $$('[data-activate]').forEach(b=>b.onclick=()=>activateRequest(b.dataset.activate));$$('[data-reject]').forEach(b=>b.onclick=()=>rejectRequest(b.dataset.reject));$$('#activationRows [data-openbiz]').forEach(b=>b.onclick=()=>openBusinessLocal(b.dataset.openbiz,false))
+}
+async function activateRequest(requestId){
+  const r=C.activationRequests?.[requestId];if(!r)return;if(!confirm('¿Activar el visor para '+(r.businessName||'esta sucursal')+'?'))return;
+  try{
+    let businessId=r.requestedBusinessId||'',current=null;
+    if(businessId)current=await get('quecomer/businesses/'+businessId).catch(()=>null);
+    if(!businessId||!current){
+      const sameName=findBusinessByName(r.businessName);
+      if(sameName){
+        businessId=sameName.id;current=sameName;
+        if(!confirm('Ya existe un negocio llamado “'+(sameName.name||r.businessName)+'”.\n\nEste visor se vinculará a ese mismo negocio y verá sus productos, pedidos e historial. ¿Continuar?'))return
+      }else{
+        businessId=businessIdFromName(r.businessName);
+        current=await get('quecomer/businesses/'+businessId).catch(()=>null)
+      }
+    }
+    const now=new Date().toISOString(),business={...(current||{}),id:businessId,name:r.businessName||current?.name||businessId,normalizedName:normalizeBusinessName(r.businessName||current?.name||businessId),phone:r.phone||current?.phone||'',address:r.address||current?.address||'',active:current?.active!==false,platformBlocked:current?.platformBlocked===true,commissionPct:Number.isFinite(Number(current?.commissionPct))?Number(current.commissionPct):C.defaultFee,activationStatus:'active',activatedAt:current?.activatedAt||now,updatedAt:now};
+    await put('quecomer/businesses/'+businessId,business);
+    await del('quecomer/deletedBusinesses/'+businessId).catch(()=>{});
+    await put('quecomer/viewerAccess/'+r.deviceId+'/'+businessId,{status:'active',businessId,businessName:business.name,requestId,activatedAt:now,updatedAt:now});
+    await patch('quecomer/activationRequests/'+requestId,{status:'active',businessId,activatedAt:now,approvedBy:'Control de Sistema Qué Comer!!',updatedAt:now});
+    toast('Visor activado para '+business.name);await loadAll()
+  }catch(e){toast('No se pudo activar: '+e.message)}
+}
+async function rejectRequest(requestId){
+  const r=C.activationRequests?.[requestId];if(!r)return;if(!confirm('¿Rechazar la solicitud de '+(r.businessName||'esta sucursal')+'?'))return;
+  try{const now=new Date().toISOString();await patch('quecomer/activationRequests/'+requestId,{status:'rejected',rejectedAt:now,rejectedBy:'Control de Sistema Qué Comer!!',updatedAt:now});toast('Solicitud rechazada');await loadAll()}catch(e){toast(e.message)}
+}
+function renderBranches(){
+  const ids=new Set([...Object.keys(C.businesses||{}),...Object.keys(C.businessOrders||{})].filter(id=>!C.deletedBusinesses?.[id]));
+  const rows=[...ids].map(id=>{const b=C.businesses?.[id]||{},orders=branchOrders(id),sales=orders.reduce((a,o)=>a+Number(o.total||0),0),fee=orders.reduce((a,o)=>a+Number(o.platformFee||0),0),net=orders.reduce((a,o)=>a+Number(o.sellerNet??(Number(o.total||0)-Number(o.platformFee||0))),0),products=branchProducts(id),blocked=b.platformBlocked===true,paused=b.businessPaused===true,assignedFee=Number.isFinite(Number(b.commissionPct))?Number(b.commissionPct):C.defaultFee;return{id,b,name:b.name||orders[0]?.businessName||id,orders:orders.length,sales,fee,net,pct:sales?fee/sales*100:0,products:products.length,blocked,paused,assignedFee}}).sort((a,b)=>b.sales-a.sales);
+  $('#branchRows').innerHTML=rows.length?rows.map(r=>`<tr><td><b>${esc(r.name)}</b><div class="small">${esc(r.id)}</div></td><td><span class="pill ${r.blocked?'blocked':'active'}">${r.blocked?'Bloqueada':(r.paused?'Pausada':'Activa')}</span></td><td><b>${r.assignedFee.toFixed(2)}%</b><div class="actions"><button class="btn" data-fee="${esc(r.id)}">Editar</button></div></td><td>${r.orders}</td><td>${money(r.sales)}</td><td>${money(r.fee)}</td><td>${r.pct.toFixed(2)}%</td><td>${money(r.net)}</td><td>${r.products}</td><td class="no-print"><div class="actions"><button class="btn" data-openbiz="${esc(r.id)}">Abrir visor</button><button class="btn ${r.blocked?'':'danger'}" data-block="${esc(r.id)}" data-state="${r.blocked?'1':'0'}">${r.blocked?'Desbloquear':'Bloquear'}</button><button class="btn danger" data-deletebiz="${esc(r.id)}">Eliminar</button></div></td></tr>`).join(''):`<tr><td colspan="10">Sin sucursales.</td></tr>`;
+  $$('#branchRows [data-block]').forEach(b=>b.onclick=()=>toggleBlock(b.dataset.block,b.dataset.state==='1'));
+  $$('#branchRows [data-openbiz]').forEach(b=>b.onclick=()=>openBusinessLocal(b.dataset.openbiz,false));
+  $$('#branchRows [data-deletebiz]').forEach(b=>b.onclick=()=>deleteBusiness(b.dataset.deletebiz));
+  $$('#branchRows [data-fee]').forEach(b=>b.onclick=()=>openBranchCommission(b.dataset.fee))
+}
+function openBranchCommission(id){const b=C.businesses?.[id]||{};$('#commissionBusinessId').value=id;$('#commissionBusinessName').value=b.name||id;$('#branchCommissionPct').value=Number.isFinite(Number(b.commissionPct))?Number(b.commissionPct):C.defaultFee;openModal('#commissionModal');setTimeout(()=>$('#branchCommissionPct').focus(),60)}
+$('#saveBranchCommission').onclick=async()=>{const id=$('#commissionBusinessId').value,b=C.businesses?.[id];if(!id||!b){toast('Sucursal no encontrada');return}const pct=Number($('#branchCommissionPct').value);if(!Number.isFinite(pct)||pct<0||pct>100){toast('Escribe un porcentaje entre 0 y 100');return}try{await patch('quecomer/businesses/'+id,{commissionPct:pct,commissionUpdatedAt:new Date().toISOString(),commissionUpdatedBy:'Control de Sistema Qué Comer!!',updatedAt:new Date().toISOString()});const updates={};Object.entries(C.products||{}).forEach(([pid,p])=>{if(p?.businessId===id){updates[pid+'/commissionPct']=pct;updates[pid+'/updatedAt']=new Date().toISOString()}});if(Object.keys(updates).length)await patch('quecomer/products',updates);C.businesses[id]={...b,commissionPct:pct};closeModals();render();toast('Comisión de '+(b.name||id)+' actualizada a '+pct.toFixed(2)+'%')}catch(e){toast('No se pudo actualizar la comisión: '+e.message)}};
+async function toggleBlock(id,isBlocked){const b=C.businesses?.[id]||{},name=b.name||id;if(!confirm((isBlocked?'¿Desbloquear ':'¿Bloquear ')+name+'?'))return;try{await patch('quecomer/businesses/'+id,{platformBlocked:!isBlocked,blockedAt:!isBlocked?new Date().toISOString():null,blockedBy:'Control de Sistema Qué Comer!!',updatedAt:new Date().toISOString()});C.businesses[id]={...b,platformBlocked:!isBlocked};render();toast(!isBlocked?'Sucursal bloqueada; su menú dejó de mostrarse':'Sucursal desbloqueada')}catch(e){toast(e.message)}}
+async function deleteBusiness(id){
+  const b=C.businesses?.[id]||{},orders=branchOrders(id),name=b.name||orders[0]?.businessName||id;
+  if(!confirm('¿Eliminar la sucursal “'+name+'” del sistema?\n\nSe eliminarán su registro, productos, promociones y accesos de visor. El historial de ventas se conservará para tus reportes generales.'))return;
+  const typed=prompt('Para confirmar la eliminación de '+name+', escribe ELIMINAR');
+  if(String(typed||'').trim().toUpperCase()!=='ELIMINAR'){toast('Eliminación cancelada');return}
+  try{
+    const promos=await get('quecomer/promotions').catch(()=>null),updates={};
+    updates['businesses/'+id]=null;
+    Object.entries(C.products||{}).forEach(([pid,p])=>{if(p?.businessId===id)updates['products/'+pid]=null});
+    Object.entries(promos||{}).forEach(([pid,p])=>{if(p?.businessId===id)updates['promotions/'+pid]=null});
+    Object.entries(C.activationRequests||{}).forEach(([rid,r])=>{if(r?.businessId===id||r?.requestedBusinessId===id)updates['activationRequests/'+rid]=null});
+    Object.entries(C.viewerAccess||{}).forEach(([deviceId,accesses])=>{if(accesses&&typeof accesses==='object'&&accesses[id])updates['viewerAccess/'+deviceId+'/'+id]=null});
+    updates['deletedBusinesses/'+id]={id,name,deletedAt:new Date().toISOString(),deletedBy:'Control de Sistema Qué Comer!!',historyPreserved:true};
+    await patch('quecomer',updates);
+    toast('Sucursal eliminada. Su historial de ventas quedó conservado.');
+    await loadAll()
+  }catch(e){toast('No se pudo eliminar la sucursal: '+e.message)}
+}
+function renderRanking(orders){const map={};orders.forEach(o=>(Array.isArray(o.items)?o.items:[]).forEach(i=>{const key=i.productId||((i.businessId||'')+'|'+i.name);if(!map[key])map[key]={name:i.name||'Producto',businessName:i.businessName||'Establecimiento',qty:0,sales:0};map[key].qty+=Number(i.qty||0);map[key].sales+=Number(i.lineTotal??Number(i.price||0)*Number(i.qty||0))}));const list=Object.values(map).sort((a,b)=>b.qty-a.qty).slice(0,15),max=Math.max(1,...list.map(x=>x.qty));$('#ranking').innerHTML=list.length?list.map((x,i)=>`<div class="rankrow"><div class="ranktop"><div class="ranknum">${i+1}</div><div class="rankname">${esc(x.name)}<small>🏪 ${esc(x.businessName)} · ${money(x.sales)} vendido</small></div><div class="rankqty">${x.qty}</div></div><div class="bar"><span style="width:${Math.max(5,x.qty/max*100)}%"></span></div></div>`).join(''):`<div class="empty">Sin productos vendidos en el periodo.</div>`}
+function renderOrderRows(orders){const sorted=[...orders].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)));$('#orderRows').innerHTML=sorted.length?sorted.map(o=>`<tr><td>${esc(fmtDate(o.createdAt))}</td><td>${esc(shortId(o.id))}</td><td>${esc(o.customer?.name||'')}</td><td>${Number(o.businessCount||new Set((o.items||[]).map(i=>i.businessId)).size)}</td><td>${money(o.total)}</td><td>${money(o.platformFee)}</td><td>${money(Number(o.total||0)-Number(o.platformFee||0))}</td></tr>`).join(''):`<tr><td colspan="7">Sin pedidos en el periodo.</td></tr>`}
+function currentMonth(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+$('#monthFilter').value=currentMonth();$('#monthFilter').onchange=()=>{C.period='month';render()};$('#currentMonth').onclick=()=>{$('#monthFilter').value=currentMonth();C.period='month';render()};$('#allTime').onclick=()=>{C.period='all';render()};$('#refresh').onclick=loadAll;$('#printBtn').onclick=()=>window.print();
+$('#resetMonthlySales').onclick=async()=>{
+  if(!C.dbUrl){toast('Configura Firebase primero');return}
+  if(C.period==='all'){toast('Selecciona un mes antes de usar Reset');return}
+  const month=$('#monthFilter').value||currentMonth();
+  const visible=globalOrders();
+  if(!visible.length){toast('No hay registros visibles para resetear en '+month);return}
+  if(!confirm('¿Resetear el reporte central de '+month+'?\n\nLos pedidos ya registrados dejarán de contarse y mostrarse en Control de Sistema a partir de este reset. El historial de cada sucursal SE CONSERVARÁ y no se eliminará ningún pedido de Firebase. Los pedidos nuevos posteriores al reset volverán a aparecer normalmente.'))return;
+  const typed=prompt('Para confirmar el reset central del mes '+month+', escribe RESET');
+  if(String(typed||'').trim().toUpperCase()!=='RESET'){toast('Reset cancelado');return}
+  try{
+    const now=new Date(),record={
+      month,
+      resetAt:now.toISOString(),
+      resetAtMs:now.getTime(),
+      resetBy:'Control de Sistema Qué Comer!!',
+      mode:'central-report-only',
+      preservesBusinessHistory:true
+    };
+    await put('quecomer/controlReportResets/'+month,record);
+    C.controlReportResets[month]=record;
+    toast('Reporte central de '+month+' reiniciado. El historial de las sucursales se conservó.');
+    render();
+  }catch(e){toast('No se pudo resetear el reporte central: '+e.message)}
+};
+function xlsEsc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function downloadStyledXls(filename,body){const html='\ufeff<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;color:#17202a}h1{font-size:20px;margin:0 0 6px}.meta{margin:2px 0 14px;color:#475467}.section{font-size:15px;font-weight:bold;background:#101828;color:#fff;padding:8px;margin-top:16px}table{border-collapse:collapse;width:100%;margin:6px 0 14px}th{background:#ff6b35;color:#fff;font-weight:bold}th,td{border:1px solid #d0d5dd;padding:7px 9px;vertical-align:top}td.num{text-align:right}tr:nth-child(even) td{background:#f8fafc}.kpi td:first-child{font-weight:bold;background:#f2f4f7}</style></head><body>'+body+'</body></html>',blob=new Blob([html],{type:'application/vnd.ms-excel;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200)}
+$('#csvBtn').onclick=()=>{const orders=globalOrders(),sales=orders.reduce((a,o)=>a+Number(o.total||0),0),fee=orders.reduce((a,o)=>a+Number(o.platformFee||0),0),net=sales-fee,pct=sales?fee/sales*100:0,period=C.period==='all'?'Histórico completo':($('#monthFilter').value||''),ids=new Set([...Object.keys(C.businesses||{}),...Object.keys(C.businessOrders||{})].filter(id=>!C.deletedBusinesses?.[id])),branchRows=[...ids].map(id=>{const b=C.businesses?.[id]||{},os=branchOrders(id),s=os.reduce((a,o)=>a+Number(o.total||0),0),f=os.reduce((a,o)=>a+Number(o.platformFee||0),0),n=os.reduce((a,o)=>a+Number(o.sellerNet??(Number(o.total||0)-Number(o.platformFee||0))),0),assigned=Number.isFinite(Number(b.commissionPct))?Number(b.commissionPct):C.defaultFee;return`<tr><td>${xlsEsc(b.name||os[0]?.businessName||id)}</td><td>${xlsEsc(id)}</td><td>${xlsEsc(b.platformBlocked?'Bloqueada':(b.businessPaused?'Pausada':'Activa'))}</td><td class="num">${assigned.toFixed(2)}%</td><td class="num">${os.length}</td><td class="num">${s.toFixed(2)}</td><td class="num">${f.toFixed(2)}</td><td class="num">${(s?f/s*100:0).toFixed(2)}%</td><td class="num">${n.toFixed(2)}</td></tr>`}).join(''),rankMap={};orders.forEach(o=>(Array.isArray(o.items)?o.items:[]).forEach(i=>{const key=i.productId||((i.businessId||'')+'|'+i.name);if(!rankMap[key])rankMap[key]={name:i.name||'Producto',businessName:i.businessName||'Establecimiento',qty:0,sales:0};rankMap[key].qty+=Number(i.qty||0);rankMap[key].sales+=Number(i.lineTotal??Number(i.price||0)*Number(i.qty||0))}));const ranking=Object.values(rankMap).sort((a,b)=>b.qty-a.qty).slice(0,20).map((x,i)=>`<tr><td>${i+1}</td><td>${xlsEsc(x.name)}</td><td>${xlsEsc(x.businessName)}</td><td class="num">${x.qty}</td><td class="num">${x.sales.toFixed(2)}</td></tr>`).join(''),detail=[...orders].sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))).map(o=>`<tr><td>${xlsEsc(fmtDate(o.createdAt))}</td><td>${xlsEsc(shortId(o.id))}</td><td>${xlsEsc(o.customer?.name||'')}</td><td>${xlsEsc((o.items||[]).map(i=>`${Number(i.qty||0)} × ${i.name||'Producto'} (${i.businessName||''})`).join(', '))}</td><td class="num">${Number(o.total||0).toFixed(2)}</td><td class="num">${Number(o.platformFee||0).toFixed(2)}</td><td class="num">${(Number(o.total||0)-Number(o.platformFee||0)).toFixed(2)}</td></tr>`).join(''),body=`<h1>CONTROL DE SISTEMA QUÉ COMER!!</h1><div class="meta"><b>Periodo:</b> ${xlsEsc(period)}<br><b>Fecha de exportación:</b> ${xlsEsc(new Date().toLocaleString('es-MX'))}</div><div class="section">RESUMEN GENERAL</div><table class="kpi"><tr><td>Pedidos generales</td><td class="num">${orders.length}</td></tr><tr><td>Venta general</td><td class="num">${sales.toFixed(2)}</td></tr><tr><td>Comisión Qué Comer!!</td><td class="num">${fee.toFixed(2)}</td></tr><tr><td>Neto a negocios</td><td class="num">${net.toFixed(2)}</td></tr><tr><td>Comisión efectiva</td><td class="num">${pct.toFixed(2)}%</td></tr></table><div class="section">REPORTE POR SUCURSAL</div><table><thead><tr><th>Sucursal</th><th>Código</th><th>Estado</th><th>Comisión asignada</th><th>Pedidos</th><th>Venta</th><th>Comisión cobrada</th><th>% efectivo</th><th>Neto negocio</th></tr></thead><tbody>${branchRows||'<tr><td colspan="9">Sin sucursales.</td></tr>'}</tbody></table><div class="section">PRODUCTOS MÁS SOLICITADOS</div><table><thead><tr><th>#</th><th>Producto</th><th>Sucursal</th><th>Cantidad</th><th>Venta</th></tr></thead><tbody>${ranking||'<tr><td colspan="5">Sin productos vendidos.</td></tr>'}</tbody></table><div class="section">DETALLE DE PEDIDOS</div><table><thead><tr><th>Fecha</th><th>Pedido</th><th>Cliente</th><th>Productos / sucursales</th><th>Total</th><th>Comisión</th><th>Neto</th></tr></thead><tbody>${detail||'<tr><td colspan="7">Sin pedidos en el periodo.</td></tr>'}</tbody></table>`;downloadStyledXls('Que-Comer-reporte-'+(C.period==='all'?'historico':($('#monthFilter').value||currentMonth()))+'.xls',body);toast('Reporte exportado en formato Excel .xls')};
+loadAll();setInterval(()=>{if(C.dbUrl)loadAll()},12000);
+</script><script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+}
+</script>
+</body></html>

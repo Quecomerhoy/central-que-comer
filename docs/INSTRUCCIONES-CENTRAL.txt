@@ -1,0 +1,36 @@
+QUÉ COMER!! - ESTRUCTURA CENTRAL UNIFICADA v1.17
+
+REPOSITORIO NUEVO:
+https://github.com/Quecomerhoy/central-que-comer
+
+SUBIR:
+Carga esta carpeta completa "docs" al repositorio central-que-comer.
+
+GITHUB PAGES (solo una vez):
+Settings > Pages > Deploy from a branch
+Branch: main
+Folder: /docs
+
+Después quedarán estas rutas:
+CONTROL:
+https://quecomerhoy.github.io/central-que-comer/control-sistema-que-comer.html
+
+PEDIDOS / MENÚ:
+https://quecomerhoy.github.io/central-que-comer/que-comer-pedidos.html
+
+NEGOCIO:
+https://quecomerhoy.github.io/central-que-comer/que-comer-principal-negocio.html
+
+REPOSITORIOS VIEJOS (solo una vez):
+Dentro de _REDIRECTORES_UNA_SOLA_VEZ hay tres index.html.
+Sustituye el index.html del repo viejo correspondiente:
+- MENU
+- NEGOCIO
+- CENTRAL-ANTERIOR
+
+Después de esa configuración inicial, NO vuelvas a editar los tres repositorios viejos.
+Para cualquier cambio futuro solo sustituye/actualiza la carpeta docs de central-que-comer.
+
+El Control central ya NO necesita que pegues dos URLs de GitHub:
+las rutas de Pedidos y Negocio se calculan automáticamente desde la misma carpeta central.
+Firebase sigue siendo la base compartida para productos, imágenes, pedidos, promociones, saldos y negocios.
