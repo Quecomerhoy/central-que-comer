@@ -67,3 +67,32 @@ function init(){
 }
 wait();
 })();
+
+(()=>{
+if(window.__QC_EDIT_PREPARING_ONLY_11823)return;window.__QC_EDIT_PREPARING_ONLY_11823=true;
+const wait=()=>{
+  if(typeof QC==='undefined'||typeof addToCart!=='function'||typeof beginEditOrder!=='function'||typeof updateExistingOrder!=='function'||typeof orderActiveForEdit!=='function'){setTimeout(wait,60);return}
+  try{EDITABLE_STATUSES.clear();EDITABLE_STATUSES.add('preparando')}catch(e){}
+  const baseAdd=addToCart;
+  addToCart=function(id){
+    if(QC.editOrder){
+      const p=QC.products.find(x=>String(x.id)===String(id));if(!p)return;
+      const branch=QC.editOrder.branches?.[p.businessId];
+      if(!branch||String(branch.status||'')!=='preparando'){toast('Solo puedes agregar productos de los negocios que ya están preparando este pedido');return}
+    }
+    return baseAdd(id)
+  };
+  orderActiveForEdit=function(watch){return (watch?.parts||[]).some(p=>String(p.status||'')==='preparando')};
+  const baseBegin=beginEditOrder;
+  beginEditOrder=async function(orderId){await baseBegin(orderId);if(QC.editOrder){try{closeCart()}catch(e){}toast('El pedido está en preparación. Solo puedes agregar productos nuevos; lo ya enviado queda bloqueado.')}};
+  const baseUpdate=updateExistingOrder;
+  updateExistingOrder=async function(){
+    if(QC.editOrder){
+      for(const item of QC.cart){const branch=QC.editOrder.branches?.[item.businessId];if(!branch||String(branch.status||'')!=='preparando'){toast('Solo puedes agregar productos a un negocio que siga preparando el pedido');return}}
+    }
+    return baseUpdate()
+  };
+  try{decorateMessageCards()}catch(e){}
+};
+wait();
+})();
