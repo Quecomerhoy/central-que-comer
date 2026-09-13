@@ -38,6 +38,45 @@ const modMonthly=makeModule('monthly','📅','Detalle mensual','Consulta y expor
 function cleanConfig(){const modal=document.querySelector('#configModal');if(!modal)return;const notice=modal.querySelector('#configNotice');if(notice)notice.hidden=true;['githubPedidosUrl','githubNegocioUrl'].forEach(id=>{const el=document.getElementById(id);if(el){const field=el.closest('.field');if(field)field.hidden=true}});const menu=document.getElementById('menuShareUrl'),biz=document.getElementById('businessShareUrl');if(menu){const f=menu.closest('.field'),l=f?.querySelector('label');if(l)l.textContent='Liga GitHub para clientes';f?.querySelectorAll('.small').forEach(x=>x.remove())}if(biz){const f=biz.closest('.field'),l=f?.querySelector('label');if(l)l.textContent='Liga GitHub para negocios';f?.querySelectorAll('.small').forEach(x=>x.remove())}modal.querySelector('.launch-note')?.remove();modal.querySelectorAll('.small').forEach(x=>{if(x.closest('.field')?.querySelector('#loyaltyPct'))return;x.remove()})}
 cleanConfig();
 
+function qcBusinessHasCustomCommission1192(b){return !!(b&&(b.commissionSource==='branch'||b.commissionMode==='custom'||(!b.commissionSource&&b.commissionUpdatedBy&&b.commissionUpdatedBy!=='Configuración central')))}
+async function qcSyncGeneralCommission1192(pct){
+  if(!C.dbUrl)return 0;
+  const now=new Date().toISOString();
+  const [businessesRaw,productsRaw]=await Promise.all([get('quecomer/businesses').catch(()=>null),get('quecomer/products').catch(()=>null)]);
+  const businesses=businessesRaw||{},products=productsRaw||{},bu={},pu={},defaultIds=new Set();
+  Object.entries(businesses).forEach(([id,b])=>{
+    if(!b||qcBusinessHasCustomCommission1192(b))return;
+    defaultIds.add(id);
+    bu[id+'/commissionPct']=pct;bu[id+'/commissionSource']='default';bu[id+'/commissionMode']='default';bu[id+'/commissionUpdatedAt']=now;bu[id+'/commissionUpdatedBy']='Configuración central';bu[id+'/updatedAt']=now;
+  });
+  Object.entries(products).forEach(([pid,p])=>{if(p&&defaultIds.has(String(p.businessId||''))){pu[pid+'/commissionPct']=pct;pu[pid+'/updatedAt']=now}});
+  if(Object.keys(bu).length)await patch('quecomer/businesses',bu);
+  if(Object.keys(pu).length)await patch('quecomer/products',pu);
+  return defaultIds.size;
+}
+const qcSaveConfigBtn1192=document.getElementById('saveConfig');
+if(qcSaveConfigBtn1192&&!qcSaveConfigBtn1192.dataset.qcCommissionSync1192){
+  qcSaveConfigBtn1192.dataset.qcCommissionSync1192='1';
+  const qcBaseSaveConfig1192=qcSaveConfigBtn1192.onclick;
+  qcSaveConfigBtn1192.onclick=async function(e){
+    const pct=Math.max(0,Number(document.getElementById('defaultFee')?.value||C.defaultFee||10));
+    if(qcBaseSaveConfig1192)await qcBaseSaveConfig1192.call(this,e);
+    if(!C.dbUrl)return;
+    try{const count=await qcSyncGeneralCommission1192(pct);await loadAll();toast('Uso de app '+pct.toFixed(2)+'% sincronizado en '+count+' negocio'+(count===1?'':'s'))}catch(err){toast('Configuración guardada, pero no se pudo sincronizar el % con negocios: '+err.message)}
+  };
+}
+const qcBranchCommissionBtn1192=document.getElementById('saveBranchCommission');
+if(qcBranchCommissionBtn1192&&!qcBranchCommissionBtn1192.dataset.qcCommissionMode1192){
+  qcBranchCommissionBtn1192.dataset.qcCommissionMode1192='1';
+  const qcBaseBranchCommission1192=qcBranchCommissionBtn1192.onclick;
+  qcBranchCommissionBtn1192.onclick=async function(e){
+    const id=document.getElementById('commissionBusinessId')?.value||'';
+    const pct=Number(document.getElementById('branchCommissionPct')?.value);
+    if(qcBaseBranchCommission1192)await qcBaseBranchCommission1192.call(this,e);
+    if(id&&C.dbUrl&&Number.isFinite(pct)){try{await patch('quecomer/businesses/'+id,{commissionSource:'branch',commissionMode:'custom',commissionUpdatedAt:new Date().toISOString(),commissionUpdatedBy:'Control de Sistema Qué Comer!!',updatedAt:new Date().toISOString()});if(C.businesses?.[id])C.businesses[id]={...C.businesses[id],commissionPct:pct,commissionSource:'branch',commissionMode:'custom'}}catch(err){}}
+  };
+}
+
 function counters(){try{const pending=Object.values(C.activationRequests||{}).filter(r=>r&&r.status==='pending').length,active=Object.entries(C.businesses||{}).filter(([id,b])=>b&&!C.deletedBusinesses?.[id]&&b.active!==false&&b.platformBlocked!==true&&b.businessPaused!==true&&b.activationStatus!=='pending'&&b.activationStatus!=='rejected').length;const a=document.getElementById('qcHomeActivationCount'),b=document.getElementById('qcHomeBusinessCount'),m=document.getElementById('qcHomeMonth');if(a)a.textContent=pending+' pendiente'+(pending===1?'':'s');if(b)b.textContent=active+' activo'+(active===1?'':'s');if(m)m.textContent=new Date().toLocaleDateString('es-MX',{month:'long',year:'numeric'})}catch(e){}}
 const pages=[...document.querySelectorAll('[data-qc-module-page]')];
 function goHome(){pages.forEach(p=>p.hidden=true);home.hidden=false;window.scrollTo({top:0,behavior:'instant'});counters()}
