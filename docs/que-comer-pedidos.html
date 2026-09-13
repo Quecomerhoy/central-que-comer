@@ -10,6 +10,54 @@
 </head>
 <body>
 <script>
+function qcB64uEncode(data){
+  try{return btoa(JSON.stringify(data)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}catch(e){return''}
+}
+function qcB64uDecode(value){
+  try{
+    let s=String(value||'').replace(/-/g,'+').replace(/_/g,'/');
+    while(s.length%4)s+='=';
+    return JSON.parse(atob(s));
+  }catch(e){return null}
+}
+function qcPersistBootstrap(){
+  try{
+    const p=new URLSearchParams(location.search);
+    let data=qcB64uDecode(p.get('qci'));
+    if(!data){
+      const db=(p.get('qcdb')||p.get('db')||'').trim().replace(/\/+$/,'');
+      if(db||p.get('biz')||p.get('newbiz'))data={
+        qcdb:db,
+        qcf:p.get('qcf'),
+        qcl:p.get('qcl'),
+        biz:p.get('biz')||'',
+        newbiz:p.get('newbiz')||'0'
+      };
+    }
+    if(!data)return;
+    const db=String(data.qcdb||'').trim().replace(/\/+$/,'');
+    if(db){
+      localStorage.setItem('qc_platform_db',db);
+      localStorage.setItem('qc_db_url',db);
+      localStorage.setItem('qc_business_runtime_db',db);
+      localStorage.setItem('qc_admin_db_url',db);
+    }
+    if(data.qcf!==undefined&&data.qcf!==null&&Number.isFinite(Number(data.qcf)))localStorage.setItem('qc_platform_fee_v08',String(Number(data.qcf)));
+    if(data.qcl!==undefined&&data.qcl!==null&&Number.isFinite(Number(data.qcl)))localStorage.setItem('qc_loyalty_pct',String(Number(data.qcl)));
+    if(data.biz)localStorage.setItem('qc_last_business_id',String(data.biz));
+    window.name='QC_BOOT_V1:'+encodeURIComponent(JSON.stringify(data));
+    const persistent={...data,newbiz:'0'};
+    const token=qcB64uEncode(persistent);
+    if(token){
+      p.set('qci',token);
+      ['qcdb','db','qcf','qcl','biz','newbiz'].forEach(k=>p.delete(k));
+      const qs=p.toString();
+      history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')+location.hash);
+    }
+  }catch(e){}
+}
+qcPersistBootstrap();
+
 const qcAutoUpdate=()=>{
   if(!('serviceWorker' in navigator))return;
   let reloading=false;
@@ -34,9 +82,10 @@ qcAutoUpdate();
 
 (async()=>{
   try{
-    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-pedidos-core.html?v=1.17.4",{cache:'no-store'});
+    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-pedidos-core.html?v=1.17.6",{cache:'no-store'});
     if(!r.ok)throw new Error('No se pudo cargar el visor');
     let html=await r.text();
+    html=html.replace(/<link\s+rel=[\"']manifest[\"'][^>]*>\s*/ig,'');
     const changes=[["La primera vez que uses Qué Comer!! necesitamos tus datos para identificar y entregar correctamente tus pedidos. Una vez guardados quedarán bloqueados en este navegador.", "La primera vez que uses Qué Comer!! necesitamos tus datos para identificar y entregar correctamente tus pedidos. Después los usaremos automáticamente en tus próximas compras."], ["Tus datos ya fueron registrados y están bloqueados para evitar cambios frecuentes. Se utilizarán automáticamente en tus pedidos.", "Tus datos ya están registrados y se utilizarán automáticamente en tus pedidos."], ["toast('Los datos ya están bloqueados')", "toast('Tus datos ya están registrados')"], ["toast('Datos registrados y bloqueados')", "toast('Datos registrados correctamente')"]];
     for(const [from,to] of changes)html=html.split(from).join(to);
     document.open();
