@@ -21,6 +21,7 @@ function qcSpeakBusinessAlert(text){
 window.speakBusiness=qcSpeakBusinessAlert;
 ['pointerdown','touchstart','click'].forEach(ev=>document.addEventListener(ev,()=>{try{window.speechSynthesis?.resume()}catch(e){}},{passive:true}));
 
+
 A.minOrderAmount=Math.max(0,Number(A.minOrderAmount||0));
 const configBody=document.querySelector('#configModal .modalbody .formgrid');
 if(configBody&&!document.getElementById('minOrderAmount')){
@@ -36,4 +37,24 @@ function messagesOf(order){return order?.messages&&typeof order.messages==='obje
 async function sendMessage(orderId,text){if(A.accessStatus!=='active'||A.platformBlocked)return;const clean=String(text||'').trim().slice(0,300);if(!clean){toast('Escribe el mensaje para el cliente');return}const order=A.orders.find(x=>String(x.id)===String(orderId));if(!order)return;const now=new Date().toISOString(),id=makeId('msg'),data={id,text:clean,sender:'business',businessId:A.businessId,businessName:A.businessName,createdAt:now};try{await put('quecomer/businessOrders/'+A.businessId+'/'+orderId+'/messages/'+id,data);await patch('quecomer/businessOrders/'+A.businessId+'/'+orderId,{lastMessage:clean,lastMessageAt:now,updatedAt:now});order.messages=order.messages||{};order.messages[id]=data;order.lastMessage=clean;order.lastMessageAt=now;renderOrders();toast('Mensaje enviado al cliente')}catch(e){toast(e.message)}}
 function decorateOrders(){document.querySelectorAll('#orders .order').forEach(card=>{if(card.querySelector('.order-message-box'))return;const finalize=card.querySelector('[data-finalize]'),orderId=finalize?.dataset.finalize;if(!orderId)return;const order=A.orders.find(x=>String(x.id)===String(orderId));if(!order)return;const msgs=messagesOf(order),last=msgs[msgs.length-1];const box=document.createElement('div');box.className='order-message-box';box.innerHTML=`<div class="order-message-title">💬 Mensaje para el cliente</div><div class="order-message-quick"><button class="btn" type="button" data-qm="preparing">👨‍🍳 Preparando pedido</button><button class="btn" type="button" data-qm="way">🛵 Ya va en camino</button><button class="btn" type="button" data-qm="outside">📍 Ya estamos afuera</button></div><div class="order-message-row"><input maxlength="300" placeholder="Escribe un mensaje editable para el cliente"><button class="btn primary" type="button">Enviar mensaje</button></div>${last?`<div class="order-message-last"><b>Último mensaje:</b> ${esc(last.text||'')}</div>`:''}`;const input=box.querySelector('input'),send=box.querySelector('.order-message-row .btn');box.querySelector('[data-qm="preparing"]').onclick=()=>{input.value='👨‍🍳 Estamos preparando tu pedido';input.focus()};box.querySelector('[data-qm="way"]').onclick=()=>{input.value='🛵 Tu pedido ya va en camino';input.focus()};box.querySelector('[data-qm="outside"]').onclick=()=>{input.value='📍 Ya estamos afuera con tu pedido';input.focus()};send.onclick=()=>sendMessage(orderId,input.value);const bottom=card.querySelector('.order-bottom');card.insertBefore(box,bottom||null)})}
 const originalRenderOrders=renderOrders;renderOrders=function(){const result=originalRenderOrders.apply(this,arguments);decorateOrders();return result};decorateOrders();
+
+// Sincronización en vivo del porcentaje de uso/comisión definido por Control Central.
+// El core ya consulta Firebase periódicamente; aquí refrescamos la interfaz cuando ese valor cambia.
+if(typeof loadBusinessStatus==='function'&&!window.__QC_LIVE_COMMISSION_1191){
+  window.__QC_LIVE_COMMISSION_1191=true;
+  const qcBaseLoadBusinessStatus1191=loadBusinessStatus;
+  loadBusinessStatus=async function(){
+    const before=Number(A.defaultFee);
+    const result=await qcBaseLoadBusinessStatus1191.apply(this,arguments);
+    const after=Number(A.defaultFee);
+    if(Number.isFinite(after)&&Math.abs(after-before)>0.000001){
+      (A.products||[]).forEach(p=>p.commissionPct=after);
+      if(typeof renderProducts==='function')renderProducts();
+      const feeLabel=document.getElementById('productBranchFee');
+      if(feeLabel)feeLabel.textContent=after.toFixed(2)+'% · definida por Control central';
+      if(typeof toast==='function')toast('Uso de app actualizado a '+after.toFixed(2)+'%');
+    }
+    return result;
+  };
+}
 })();
