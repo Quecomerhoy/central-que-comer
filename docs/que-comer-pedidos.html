@@ -72,11 +72,11 @@ qcAutoUpdate();
 
 (async()=>{
   try{
-    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-pedidos-core.html?v=1.18.27",{cache:'no-store'});
+    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-pedidos-core.html?v=1.18.28",{cache:'no-store'});
     if(!r.ok)throw new Error('No se pudo cargar el visor');
     let html=await r.text();
     html=html.replace(/<link\s+rel=[\"']manifest[\"'][^>]*>\s*/ig,'');
-    html=html.replace('</body>','<script src="menu-analytics-v1.18.js?v=1.18.27"><\/script><script src="menu-features-v1.18.16.js?v=1.18.27"><\/script><script src="menu-fixes-v1.18.17.js?v=1.18.27"><\/script><script src="menu-order-edit-v1.18.21.js?v=1.18.27"><\/script><script src="menu-assembler-v1.18.27.js?v=1.18.27"><\/script><script src="menu-ui-v1.18.25.js?v=1.18.27"><\/script></body>');
+    html=html.replace('</body>','<script src="menu-analytics-v1.18.js?v=1.18.28"><\/script><script src="menu-features-v1.18.16.js?v=1.18.28"><\/script><script src="menu-fixes-v1.18.17.js?v=1.18.28"><\/script><script src="menu-order-edit-v1.18.21.js?v=1.18.28"><\/script><script src="menu-assembler-v1.18.27.js?v=1.18.28"><\/script><script src="menu-ui-v1.18.25.js?v=1.18.28"><\/script></body>');
     const changes=[["La primera vez que uses Qué Comer!! necesitamos tus datos para identificar y entregar correctamente tus pedidos. Una vez guardados quedarán bloqueados en este navegador.", "La primera vez que uses Qué Comer!! necesitamos tus datos para identificar y entregar correctamente tus pedidos. Después los usaremos automáticamente en tus próximas compras."], ["Tus datos ya fueron registrados y están bloqueados para evitar cambios frecuentes. Se utilizarán automáticamente en tus pedidos.", "Tus datos ya están registrados y se utilizarán automáticamente en tus pedidos."], ["toast('Los datos ya están bloqueados')", "toast('Tus datos ya están registrados')"], ["toast('Datos registrados y bloqueados')", "toast('Datos registrados correctamente')"]];
     for(const [from,to] of changes)html=html.split(from).join(to);
     document.open();
