@@ -1,0 +1,14 @@
+
+v1.16 - LOGO AL ANCLAR / INSTALAR EN DISPOSITIVO
+- Se agregaron iconos de Qué Comer para iPhone/iPad, Android y escritorio.
+- Al usar "Agregar a pantalla de inicio" o "Instalar app" debe mostrarse el logo de Qué Comer.
+- Pedidos, Negocio y Control tienen manifiestos PWA independientes.
+- Se agregó soporte standalone y service-worker.js.
+- IMPORTANTE: en GitHub Pages debes subir también la carpeta assets, los archivos .webmanifest y service-worker.js. Si subes únicamente el HTML, el logo no podrá aparecer al anclar.
+
+v1.17 - REPOSITORIO CENTRAL UNIFICADO
+- Los tres visores viven en una sola carpeta docs.
+- Control calcula automáticamente las rutas de Pedidos y Negocio desde la misma publicación.
+- Ya no se capturan dos URLs GitHub por separado.
+- Los tres repositorios anteriores quedan como alias/redirectores de una sola vez.
+- Después de la migración, futuras versiones se actualizan reemplazando únicamente docs en central-que-comer.
