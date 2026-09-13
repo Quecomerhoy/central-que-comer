@@ -1,4 +1,4 @@
-const CACHE='que-comer-central-v1.18.4';
+const CACHE='que-comer-central-v1.18.5';
 const CORE=[
   './',
   './index.html',
