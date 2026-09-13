@@ -1,0 +1,134 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "quecomer": {
+      ".read": false,
+      ".write": false,
+      "platform": {
+        "config": {
+          ".read": true,
+          ".write": true
+        }
+      },
+      "products": {
+        ".read": true,
+        ".write": true,
+        ".indexOn": [
+          "businessId",
+          "category",
+          "active",
+          "paused",
+          "updatedAt"
+        ]
+      },
+      "promotions": {
+        ".read": true,
+        ".write": true,
+        ".indexOn": [
+          "businessId",
+          "active",
+          "updatedAt"
+        ]
+      },
+      "businesses": {
+        ".read": true,
+        ".write": true,
+        ".indexOn": [
+          "name",
+          "active",
+          "platformBlocked",
+          "businessPaused",
+          "updatedAt"
+        ]
+      },
+      "orders": {
+        ".read": true,
+        ".write": true,
+        ".indexOn": [
+          "createdAt",
+          "status",
+          "loyaltyCustomerKey",
+          "updatedAt"
+        ]
+      },
+      "businessOrders": {
+        ".read": true,
+        ".write": true,
+        "$businessId": {
+          ".indexOn": [
+            "createdAt",
+            "status",
+            "finalized",
+            "updatedAt"
+          ]
+        }
+      },
+      "activationRequests": {
+        ".read": true,
+        ".write": true,
+        ".indexOn": [
+          "deviceId",
+          "status",
+          "businessId",
+          "requestedBusinessId",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "viewerAccess": {
+        ".read": true,
+        ".write": true
+      },
+      "customerWallets": {
+        ".read": true,
+        ".write": true,
+        "$customerKey": {
+          ".indexOn": [
+            "phone",
+            "updatedAt"
+          ]
+        }
+      },
+      "customers": {
+        ".read": true,
+        ".write": true,
+        ".indexOn": [
+          "createdAt",
+          "lastSeenAt",
+          "source"
+        ]
+      },
+      "analytics": {
+        "menuTraffic": {
+          ".read": true,
+          ".write": true
+        }
+      },
+      "loyaltyTransactions": {
+        ".read": true,
+        ".write": true,
+        "$customerKey": {
+          ".indexOn": [
+            "createdAt",
+            "orderId",
+            "type",
+            "businessId"
+          ]
+        }
+      },
+      "controlReportResets": {
+        ".read": true,
+        ".write": true
+      },
+      "deletedBusinesses": {
+        ".read": true,
+        ".write": true
+      },
+      "$other": {
+        ".read": false,
+        ".write": false
+      }
+    }
+  }
+}
