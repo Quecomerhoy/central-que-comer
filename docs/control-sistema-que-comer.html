@@ -41,7 +41,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f3f5f7;fon
         try{w.syncCentralViewerUrls();w.fillCentralConfig?.();w.persistPlatformConfig?.()}catch(e){}
       }
       try{await inject(d,'./dashboard-v1.18.js?v=1.18.10')}catch(e){console.warn('Dashboard no cargado; Control base continúa disponible',e)}
-      try{await inject(d,'./control-modules-v1.18.2.js?v=1.18.10')}catch(e){console.warn('Módulos no cargados; Control base continúa disponible',e)}
+      try{await inject(d,'./control-modules-v1.18.2.js?v=1.19.2')}catch(e){console.warn('Módulos no cargados; Control base continúa disponible',e)}
     }catch(e){console.warn('El Control base continúa disponible',e)}
   });
   setTimeout(()=>{loading.style.display='none'},5000);
