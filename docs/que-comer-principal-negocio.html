@@ -2,14 +2,39 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Qué Comer Negocio</title>
 </head>
 <body>
 <script>
+const qcAutoUpdate=()=>{
+  if(!('serviceWorker' in navigator))return;
+  let reloading=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(reloading)return;
+    reloading=true;
+    location.reload();
+  });
+  const check=async()=>{
+    try{
+      const reg=await navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'});
+      await reg.update().catch(()=>{});
+      if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
+    }catch(e){}
+  };
+  check();
+  window.addEventListener('focus',check);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check()});
+  setInterval(check,60000);
+};
+qcAutoUpdate();
+
 (async()=>{
   try{
-    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-principal-negocio-core.html?v=1.17.3",{cache:'no-store'});
+    const r=await fetch("https://raw.githubusercontent.com/Quecomerhoy/central-que-comer/main/docs/_core/que-comer-principal-negocio-core.html?v=1.17.4",{cache:'no-store'});
     if(!r.ok)throw new Error('No se pudo cargar el visor');
     let html=await r.text();
     const changes=[["<div class=\"modalhead\"><h3>Activación del visor de negocio</h3></div>", "<div class=\"modalhead\"><h3>Registrar negocio</h3></div>"], ["<div class=\"notice\" id=\"activationNotice\"><b>Este visor todavía no está autorizado.</b> Llena los datos de la sucursal y envía la solicitud. El acceso se habilita únicamente cuando Control de Sistema Qué Comer!! la apruebe.</div>", "<div class=\"notice\" id=\"activationNotice\"><b>Registrar negocio.</b> Ingresa los datos del establecimiento para solicitar su activación.</div>"], ["    <div class=\"field\"><label>Identificador de este visor</label><div class=\"activation-code\" id=\"viewerDeviceId\"></div></div>\n", ""], ["async function req(path,opts={}){if(!A.dbUrl)throw new Error('Abre este visor desde Control de Sistema Qué Comer!!');", "async function req(path,opts={}){if(!A.dbUrl)throw new Error('No se pudo conectar al sistema central. Intenta nuevamente.');"], ["function updateBusinessView(){const name=A.accessStatus==='active'?(A.businessName||'Tu establecimiento'):'Activación requerida';", "function updateBusinessView(){const name=A.accessStatus==='active'?(A.businessName||'Tu establecimiento'):'Registrar negocio';"], ["if(!A.dbUrl)$('#businessInfoView').textContent='Este visor necesita la conexión generada por Control de Sistema Qué Comer!! o el enlace compartible del visor de negocio.';else if(A.accessStatus!=='active')$('#businessInfoView').textContent='🔒 Este visor no puede administrar el negocio hasta ser activado desde Control de Sistema Qué Comer!!.';", "if(!A.dbUrl)$('#businessInfoView').textContent='Registra tu negocio para comenzar.';else if(A.accessStatus!=='active')$('#businessInfoView').textContent='Registra tu negocio para comenzar.';"], ["function showActivationGate(message,type='pending'){A.accessStatus=type==='active'?'active':type;updateBusinessView();$('#viewerDeviceId').textContent=A.deviceId;", "function showActivationGate(message,type='pending'){A.accessStatus=type==='active'?'active':type;updateBusinessView();"], ["if(!A.dbUrl){A.accessStatus='no-connection';showActivationGate('<b>Sin conexión.</b> Abre el enlace compartible generado en Control de Sistema Qué Comer!!.','no-connection');setConn(false,'Abre desde Control de Sistema');return false}", "if(!A.dbUrl){A.accessStatus='no-connection';showActivationGate('<b>Registrar negocio.</b> Ingresa los datos del establecimiento para comenzar.','new');setConn(false,'Registrar negocio');return false}"], ["showActivationGate('<b>Activación requerida.</b> Llena los datos de la sucursal y envía la solicitud. El administrador deberá aprobar este visor desde Control de Sistema Qué Comer!!.','new');setConn(false,'Requiere activación');return false", "showActivationGate('<b>Registrar negocio.</b> Ingresa los datos del establecimiento y envía la solicitud.','new');setConn(false,'Registrar negocio');return false"], ["$('#requestActivation').onclick=async()=>{if(!A.dbUrl){toast('Abre este visor desde Control de Sistema Qué Comer!!');return}", "$('#requestActivation').onclick=async()=>{if(!A.dbUrl){toast('No se pudo conectar al sistema central. Intenta nuevamente.');return}"]];
