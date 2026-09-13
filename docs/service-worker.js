@@ -1,4 +1,4 @@
-const CACHE='que-comer-central-v1.18.20';
+const CACHE='que-comer-central-v1.18.21';
 const CORE=[
   './',
   './index.html',
@@ -51,32 +51,12 @@ async function networkFresh(request){
   }
 }
 
-async function mergedMenuFeatures(request){
-  const [base,fix]=await Promise.all([
-    fetch(request,{cache:'no-store'}),
-    fetch('./menu-fixes-v1.18.17.js',{cache:'no-store'})
-  ]);
-  if(!base.ok)return base;
-  const code=(await base.text())+'\n'+(fix.ok?await fix.text():'');
-  return new Response(code,{status:200,headers:{'Content-Type':'application/javascript; charset=utf-8','Cache-Control':'no-store'}});
-}
-
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   const url=new URL(event.request.url);
   if(url.origin!==self.location.origin)return;
 
   const path=url.pathname.toLowerCase();
-
-  if(path.endsWith('/business-features-v1.18.16.js')){
-    event.respondWith(fetch('./business-features-v1.18.17.js',{cache:'no-store'}));
-    return;
-  }
-  if(path.endsWith('/menu-features-v1.18.16.js')){
-    event.respondWith(mergedMenuFeatures(event.request));
-    return;
-  }
-
   const fresh = event.request.mode==='navigate' ||
     event.request.destination==='document' ||
     path.endsWith('.html') ||
