@@ -16,8 +16,6 @@ function init(){
   document.head.appendChild(style);
 
   function removeCartNameBox(){const box=document.getElementById('namedOrderBox');if(box)box.remove()}
-  removeCartNameBox();
-  new MutationObserver(removeCartNameBox).observe(document.body,{childList:true,subtree:true});
 
   function ensureHeaderArmar(){
     const header=document.querySelector('.header .header-inner');if(!header)return;
@@ -25,7 +23,7 @@ function init(){
     const messages=document.getElementById('openMessages');
     let btn=document.getElementById('assembleOrder');
     const old=document.getElementById('editProfile');
-    if(old&&old!==btn){old.remove()}
+    if(old&&old!==btn)old.remove();
     if(!btn){btn=document.createElement('button');btn.id='assembleOrder';btn.type='button'}
     btn.className='assemblebtn qc-header-armar';
     btn.innerHTML='👥 <span class="qc-armar-text">Armar pedido</span>';
@@ -35,8 +33,16 @@ function init(){
     else if(spacer)spacer.after(btn);
     else header.appendChild(btn);
   }
-  ensureHeaderArmar();
-  setTimeout(ensureHeaderArmar,100);setTimeout(ensureHeaderArmar,500);setTimeout(ensureHeaderArmar,1200);
+
+  function enforceLayout(){removeCartNameBox();ensureHeaderArmar()}
+  enforceLayout();
+  setTimeout(enforceLayout,100);setTimeout(enforceLayout,500);setTimeout(enforceLayout,1200);
+  new MutationObserver(removeCartNameBox).observe(document.body,{childList:true,subtree:true});
+
+  if(typeof renderCart==='function'){
+    const baseRenderCart11825=renderCart;
+    renderCart=function(){const r=baseRenderCart11825.apply(this,arguments);setTimeout(enforceLayout,0);return r};
+  }
 
   function getProfile(){try{return typeof getCustomerProfile==='function'?getCustomerProfile():JSON.parse(localStorage.getItem('qc_customer_profile_v1')||'null')}catch(e){return null}}
   function dataHtml(){const p=getProfile();if(!p)return '<div class="qc-order-data-empty">Los datos para tu pedido se solicitarán automáticamente antes de realizar la primera compra.</div>';return `<div class="qc-order-data-grid"><div class="qc-order-data-row"><small>Nombre</small><b>${esc(p.name||'—')}</b></div><div class="qc-order-data-row"><small>Teléfono</small><b>${esc(p.phone||'—')}</b></div><div class="qc-order-data-row"><small>Dirección de envío</small><b>${esc(p.address||'—')}</b></div></div>`}
@@ -51,7 +57,6 @@ function init(){
   const logo=document.querySelector('.header .logo');if(logo){logo.addEventListener('click',()=>setTimeout(ensureOrderDataInLogo,0));logo.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')setTimeout(ensureOrderDataInLogo,0)})}
   const infoObserver=new MutationObserver(()=>ensureOrderDataInLogo());infoObserver.observe(document.body,{childList:true,subtree:true});
 
-  // El perfil sigue existiendo para el primer registro obligatorio, pero ya no ocupa un botón en el encabezado.
   const profileModal=document.getElementById('profileModal');if(profileModal)profileModal.setAttribute('data-access','logo-info');
 }
 wait();
