@@ -29,7 +29,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f4f6f8;fon
 </head>
 <body>
 <div id="loading"><div>Abriendo Qué Comer Negocio…</div></div>
-<iframe id="businessFrame" title="Qué Comer Negocio" src="./_core/que-comer-principal-negocio-core.html?v=1.18.15"></iframe>
+<iframe id="businessFrame" title="Qué Comer Negocio" src="./_core/que-comer-principal-negocio-core.html?v=1.18.16"></iframe>
 
 <div id="termsOverlay" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
   <div id="termsCard">
@@ -83,7 +83,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f4f6f8;fon
 
 <script>
 (()=>{
-  const VERSION='1.18.15',TERMS_VERSION='QC-Negocios-2026-09-13-v3';
+  const VERSION='1.18.16',TERMS_VERSION='QC-Negocios-2026-09-13-v3';
   const frame=document.getElementById('businessFrame'),loading=document.getElementById('loading'),overlay=document.getElementById('termsOverlay');
   const accept=document.getElementById('acceptTerms'),confirmBtn=document.getElementById('confirmTerms'),errorBox=document.getElementById('termsError');
   let pending=null,boot={};
@@ -140,6 +140,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f4f6f8;fon
       const notice=d.getElementById('activationNotice');if(notice)notice.innerHTML='<b>Registrar negocio.</b> Ingresa los datos del establecimiento para solicitar su activación.';
       const device=d.getElementById('viewerDeviceId');if(device?.closest('.field'))device.closest('.field').style.display='none';
       const help=d.getElementById('activationHelp');if(help)help.style.display='none';
+      if(!d.getElementById('qcBusinessFeatures11816')){const s=d.createElement('script');s.id='qcBusinessFeatures11816';s.src=new URL('./business-features-v1.18.16.js?v=1.18.16',location.href).href;d.body.appendChild(s);}
       const btn=d.getElementById('requestActivation');
       if(btn){
         btn.onclick=()=>{
