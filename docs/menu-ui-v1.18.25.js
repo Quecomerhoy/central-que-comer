@@ -1,5 +1,5 @@
 (()=>{
-if(window.__QC_MENU_UI_11825)return;window.__QC_MENU_UI_11825=true;
+if(window.__QC_MENU_UI_11826)return;window.__QC_MENU_UI_11826=true;
 const wait=()=>{
   if(typeof QC==='undefined'){setTimeout(wait,60);return}
   init();
@@ -28,20 +28,21 @@ function init(){
     btn.className='assemblebtn qc-header-armar';
     btn.innerHTML='👥 <span class="qc-armar-text">Armar pedido</span>';
     btn.title='Armar pedido por nombres';
-    btn.onclick=()=>{if(typeof window.qcOpenAssembler==='function')window.qcOpenAssembler();else toast('Preparando el armador de pedidos...')};
+    btn.onclick=()=>{if(typeof window.qcOpenAssembler==='function')window.qcOpenAssembler();else if(typeof toast==='function')toast('Preparando el armador de pedidos...')};
     if(messages&&messages.parentElement===header)header.insertBefore(btn,messages);
     else if(spacer)spacer.after(btn);
-    else header.appendChild(btn);
+    else if(btn.parentElement!==header)header.appendChild(btn);
   }
 
   function enforceLayout(){removeCartNameBox();ensureHeaderArmar()}
   enforceLayout();
   setTimeout(enforceLayout,100);setTimeout(enforceLayout,500);setTimeout(enforceLayout,1200);
-  new MutationObserver(removeCartNameBox).observe(document.body,{childList:true,subtree:true});
+  const cartBoxObserver=new MutationObserver(()=>removeCartNameBox());
+  cartBoxObserver.observe(document.body,{childList:true,subtree:true});
 
   if(typeof renderCart==='function'){
-    const baseRenderCart11825=renderCart;
-    renderCart=function(){const r=baseRenderCart11825.apply(this,arguments);setTimeout(enforceLayout,0);return r};
+    const baseRenderCart11826=renderCart;
+    renderCart=function(){const r=baseRenderCart11826.apply(this,arguments);setTimeout(enforceLayout,0);return r};
   }
 
   function getProfile(){try{return typeof getCustomerProfile==='function'?getCustomerProfile():JSON.parse(localStorage.getItem('qc_customer_profile_v1')||'null')}catch(e){return null}}
@@ -51,11 +52,19 @@ function init(){
     const oldShipping=document.getElementById('qcShippingInfo');if(oldShipping)oldShipping.remove();
     let box=document.getElementById('qcOrderDataInfo');
     if(!box){box=document.createElement('div');box.id='qcOrderDataInfo';box.className='qc-order-data-box';box.innerHTML='<h4>📋 Datos para pedidos</h4><div id="qcOrderDataContent"></div>';body.appendChild(box)}
-    const content=document.getElementById('qcOrderDataContent');if(content)content.innerHTML=dataHtml();
+    const content=document.getElementById('qcOrderDataContent');if(content){const next=dataHtml();if(content.innerHTML!==next)content.innerHTML=next}
   }
   ensureOrderDataInLogo();
-  const logo=document.querySelector('.header .logo');if(logo){logo.addEventListener('click',()=>setTimeout(ensureOrderDataInLogo,0));logo.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')setTimeout(ensureOrderDataInLogo,0)})}
-  const infoObserver=new MutationObserver(()=>ensureOrderDataInLogo());infoObserver.observe(document.body,{childList:true,subtree:true});
+  const logo=document.querySelector('.header .logo');
+  if(logo){
+    logo.addEventListener('click',()=>setTimeout(ensureOrderDataInLogo,0));
+    logo.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')setTimeout(ensureOrderDataInLogo,0)});
+  }
+
+  if(typeof saveCustomerProfile==='function'){
+    const baseSaveCustomerProfile11826=saveCustomerProfile;
+    saveCustomerProfile=function(){const r=baseSaveCustomerProfile11826.apply(this,arguments);setTimeout(ensureOrderDataInLogo,0);return r};
+  }
 
   const profileModal=document.getElementById('profileModal');if(profileModal)profileModal.setAttribute('data-access','logo-info');
 }
