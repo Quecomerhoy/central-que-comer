@@ -20,7 +20,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f3f5f7;fon
 </head>
 <body>
 <div id="qcLoading"><div>Abriendo Control de Qué Comer…</div></div>
-<iframe id="qcFrame" title="Control de Sistema Qué Comer" src="./control-sistema-que-comer-core.html?v=1.18.10"></iframe>
+<iframe id="qcFrame" title="Control de Sistema Qué Comer" src="./control-sistema-que-comer-core.html?v=1.19.5"></iframe>
 <script>
 (()=>{
   const frame=document.getElementById('qcFrame'),loading=document.getElementById('qcLoading');
@@ -37,11 +37,16 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f3f5f7;fon
       const w=frame.contentWindow,d=frame.contentDocument;
       if(w&&w.C){
         w.centralBaseUrl=()=>new URL('./',w.location.href).href;
-        w.centralViewerUrl=file=>new URL(file,w.location.href).href;
+        w.centralViewerUrl=file=>{
+          const f=String(file||'');
+          if(f.includes('que-comer-pedidos'))return 'https://quecomerhoy.github.io/Que-comer-hoy-men-/';
+          if(f.includes('que-comer-principal-negocio'))return 'https://quecomerhoy.github.io/Que-comer-hoy-negocio/';
+          return new URL(file,w.location.href).href;
+        };
         try{w.syncCentralViewerUrls();w.fillCentralConfig?.();w.persistPlatformConfig?.()}catch(e){}
       }
-      try{await inject(d,'./dashboard-v1.18.js?v=1.18.10')}catch(e){console.warn('Dashboard no cargado; Control base continúa disponible',e)}
-      try{await inject(d,'./control-modules-v1.18.2.js?v=1.19.2')}catch(e){console.warn('Módulos no cargados; Control base continúa disponible',e)}
+      try{await inject(d,'./dashboard-v1.18.js?v=1.19.5')}catch(e){console.warn('Dashboard no cargado; Control base continúa disponible',e)}
+      try{await inject(d,'./control-modules-v1.18.2.js?v=1.19.5')}catch(e){console.warn('Módulos no cargados; Control base continúa disponible',e)}
     }catch(e){console.warn('El Control base continúa disponible',e)}
   });
   setTimeout(()=>{loading.style.display='none'},5000);
